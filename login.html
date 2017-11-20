@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Document</title>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/login-register/login.css"/>
+		
+		
+	</head>
+
+	<body>
+		<div class="content">
+			<div class="row">
+			<!--<div class=" top ">
+				<img class="top-img" src="img/hciot-logo.png" />
+				<span class="apart"></span>
+				<span class="top-text">欢迎登录</span>
+			</div>-->
+			<!--用户登录-->
+			<div class=" main ">
+			
+				<div class=" main-form  clearfix">
+					
+					<div class="form-main ">
+						<h4 class="login-new ">用户登录</h4>
+						
+						<div class="form-input">
+							<form id="login-form">	
+								
+									
+									<input value="" id="username" name="username" type="text"  class="input input-use" placeholder="用户名" required>
+									<span id="usernameTip" class="tip">用户名不能为空</span>
+									<span class="writeTure useTrue"></span>
+									<input value="" id="password" name="password" type="password" class="input input-password" maxlength="16" placeholder="密码(6-16位字母\数字\符号)" required>
+									<span id="passwordTip" class="tip">密码不能为空</span>
+									<span class="writeTure passwordTrue"></span>
+								
+							</form>
+						</div>
+						<div class="login-add">
+							<input type="checkbox" /><span>两周内登录</span>
+							<a class="forget-password">忘记密码</a>
+						</div>
+						<button class="btn btn-danger login" type="button" id="login-submit">登&nbsp;&nbsp;录</button>
+					</div>
+					<div class="form-footer">
+						<p class="other-use">使用第三方账号</p>
+						<ul class="use-type">
+							<li><a href="http://www.weibo.com/" class="weibo"><img src="img/weibo.jpg"></a></li>
+							<li><a href="http://web2.qq.com/"><img src="img/qq.jpg"></a></li>
+							<li><a href="https://wx.qq.com/"><img src="img/weixin.jpg"></a></li>
+						</ul>
+						<a href="#" class="new-use">注册新账号</a>
+					</div>
+				</div>
+			</div>
+			</div>
+			
+		</div>
+	</body>
+<script src="js/jquery.min.js" type="text/javascript" ></script>
+<script src="js/login-register/login.js" type="text/javascript"></script>
+<script src="js/url.js" type="text/javascript"></script>
+<script type="text/javascript">
+//	表单提交并校验用户名和密码
+	$("#login-submit").click(function(){		
+	
+	console.log(url);
+	if($("#username").val()!="" && $("#password").val()!=""){
+		
+	jQuery.support.cors = true;  
+	
+    $.ajax({
+        type: "POST",
+        url: url+"login/login",
+
+		data: $("#login-form").serialize(),
+//      cache: true,
+//      async : true,
+        dataType: "json",
+//      xhrFields: {
+//         withCredentials: true
+//      },
+//      crossDomain: true,
+        success: function (data)
+        {
+        	console.log(data.data); 
+
+     		
+			var storage = window.localStorage;
+//			获取警报信息
+			storage.setItem("messageCount",data.data.messageCount);
+			
+			storage.setItem("deviceCount",data.data.deviceCount);//设置deviceCount为"deviceCount"
+			
+			storage.setItem("faultDeviceCount",data.data.faultDeviceCount);
+			storage.setItem("maintenanceCount",data.data.maintenanceCount);
+			
+//			获取管理员信息
+			storage.setItem("id",data.data.user.id); 
+			storage.setItem("userName",data.data.user.name);
+			storage.setItem("password",data.data.user.password);
+			storage.setItem("email",data.data.user.email);					
+        	storage.setItem("time",data.data.user.time);	
+            if(data.code=="200"){
+            	
+               console.log("登录成功");
+               window.location.href="index.html";
+               return true;
+            }else if(data.code=="405"){
+                alert("账户或密码错误");
+                window.location.href="login.html";
+                return true;
+               
+            }
+        },
+        error:function () { 
+        	
+            alert("登录失败，请稍后重试！");
+            window.location.href="login.html";
+            return false;
+        }
+     });}
+    });
+</script>
+</html>

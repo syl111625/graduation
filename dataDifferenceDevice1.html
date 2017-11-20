@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title> - 百度ECHarts</title>
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+
+		<link rel="shortcut icon" href="favicon.ico">
+		<link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+		<link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+
+		<link href="css/animate.css" rel="stylesheet">
+		<link href="css/style.css?v=4.1.0" rel="stylesheet">
+		<style type="text/css">
+			.iboxHeight {
+				height: 600px;
+			}
+			
+			.iboxBlue {
+				background: skyblue;
+			}
+			
+			.ibox-tools {
+				position: relative;
+			}
+			
+			.eAppearance {
+				height: 500px;
+			}
+			
+			.posrig {
+				position: absolute;
+				top: -8px;
+				height: 28px;
+				border-radius: 5px;
+			}
+			.devID{
+				right: 165px;
+			}
+			.chooseDev {
+				right: 130px;
+			}
+			.definedDev{
+				right: 420px;
+			}
+			.definedDevS{
+				right: 270px;
+			}
+			.definedDevE{
+				right: 120px;
+			}
+			.chooseDay {
+				right: 200px;
+			}
+			
+			.addWeek {
+				right: 120px;
+				line-height: 28px;
+			}
+			
+			.check {
+				right: 50px;
+			}
+			
+			.help {
+				right: 5px;
+				line-height: 28px;
+			}
+		</style>
+	</head>
+<!--数据分析/单设备数据分析-->
+	<body class="gray-bg">
+
+		<div class="wrapper wrapper-content animated fadeInRight">
+			<div class="row">
+<!--周能耗分析-->
+				<div class="col-sm-12">
+					<div class="ibox iboxHeight">
+						<div class="ibox-title iboxBlue">
+							<h5>周能耗分析</h5>
+							<div class="ibox-tools">
+								<div class="btn-group" role="group" >
+  								<button type="button" class="btn btn-default posrig devID">电表ID</button>
+								<!--<button class="btn btn-info posrig chooseDev">电表ID</button>-->
+								<select name="nodeId" class="posrig chooseDev devWeek">
+									
+									<option value="1">1</option>
+								</select>
+									
+								</div>
+								<!--<input name="dateTime" type="date" class="posrig chooseDay timeWeek" >
+								<select name="week" class="posrig addWeek optionWeek">
+									<option value="1" >第1周</option>
+								</select>-->
+								<input class="week" type="hidden" name="condition" value="week" />
+								<button class="btn btn-info posrig check checkWeek">查询</button>
+								<a href="singleDevice.html" class="btn btn-warning btn-xs posrig help">帮助</a>
+							</div>
+						</div>
+						<div class="ibox-content ">
+
+							<div class="col-sm-7">
+								<div class="echarts eAppearance" id="echarts-line-chartWeek"></div>
+							</div>
+							<div class="col-sm-5">
+
+								<div class="echarts eAppearance" id="echarts-pie-chartWeek"></div>
+							</div>
+
+						</div>
+
+					</div>
+<!--月能耗分析-->
+					<div class="ibox iboxHeight">
+						<div class="ibox-title iboxBlue">
+							<h5>月能耗分析</h5>
+							<div class="ibox-tools">
+								<!--<button class="btn btn-info posrig chooseDev">选择设备</button>-->
+								<select name="" class="posrig chooseDev">
+									<option value="1">电表1</option>
+								</select>
+
+								<input placeholder="选择查询日期" type="date" class="layer-date posrig chooseDay" id="chooseTime">
+								<select name="" class="posrig addWeek addMonth">
+									<option value="1">第1周</option>
+								</select>
+								<button class="btn btn-info posrig check">查询</button>
+								<a href="singleDevice.html" class="btn btn-warning btn-xs posrig help">帮助</a>
+							</div>
+						</div>
+						<div class="ibox-content ">
+
+							<div class="col-sm-6">
+								<div class="echarts eAppearance" id="echarts-line-chartMonth"></div>
+							</div>
+							<div class="col-sm-6">
+
+								<div class="echarts eAppearance" id="echarts-pie-chartMonth"></div>
+							</div>
+
+						</div>
+
+					</div>
+					
+<!--年能耗分析-->					
+					<div class="ibox iboxHeight">
+						<div class="ibox-title iboxBlue">
+							<h5>年能耗分析</h5>
+							<div class="ibox-tools">
+								<!--<button class="btn btn-info posrig chooseDev">选择设备</button>-->
+								<select name="" class="posrig chooseDev">
+									<option value="1">电表1</option>
+								</select>
+
+								<input placeholder="选择查询日期" type="date" class="layer-date posrig chooseDay" id="start">
+								<select name="" class="posrig addWeek">
+									<option value="1">第1周</option>
+								</select>
+								<button class="btn btn-info posrig check">查询</button>
+								<a href="singleDevice.html" class="btn btn-warning btn-xs posrig help">帮助</a>
+							</div>
+						</div>
+						<div class="ibox-content ">
+
+							<div class="col-sm-6">
+								<div class="echarts eAppearance" id="echarts-line-chartYear"></div>
+							</div>
+							<div class="col-sm-6">
+
+								<div class="echarts eAppearance" id="echarts-pie-chartYear"></div>
+							</div>
+
+						</div>
+
+					</div>
+<!--自定义查询能耗分析-->					
+					<div class="ibox iboxHeight">
+						<div class="ibox-title iboxBlue">
+							<h5>自定义查询能耗分析</h5>
+							<div class="ibox-tools">
+								<!--<button class="btn btn-info posrig chooseDev">选择设备</button>-->
+								<select name="" class="posrig chooseDev definedDev">
+									<option value="1">1</option>
+								</select>
+
+								<input placeholder="开始查询日期" type="date" class="layer-date posrig  definedDevS" id="start">
+								
+								<input placeholder="结束查询日期" type="date" class="layer-date posrig definedDevE " id="start">
+								<!--<select name="" class="posrig addWeek">
+									<option value="1">第1周</option>
+								</select>-->
+								<button class="btn btn-info posrig check">查询</button>
+								<a href="singleDevice.html" class="btn btn-warning btn-xs posrig help">帮助</a>
+							</div>
+						</div>
+						<div class="ibox-content ">
+
+							<div class="col-sm-6">
+								<div class="echarts eAppearance" id="echarts-line-chartDefined"></div>
+							</div>
+							<div class="col-sm-6">
+
+								<div class="echarts eAppearance" id="echarts-pie-chartDefined"></div>
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+		</div>
+
+		</div>
+		<!-- 全局js -->
+		
+		<script src="js/jquery.min.js" ></script>
+		<script src="js/bootstrap.min.js" ></script>
+		<!-- ECharts demo data -->
+		<!--<script src="js/demo/echarts-demo.js"></script>-->
+		<script src="js/charts/echarts.min.js"></script>
+
+		<!-- ECharts -->
+		<!--<script src="js/plugins/echarts/echarts-all.js"></script>-->
+		<script src="js/demo/echartsDemoDifferencePie.js"></script>
+		<!-- 自定义js -->
+		<script src="js/content.js?v=1.0.0"></script>
+
+		
+
+		<script src="js/demo/echartsDemoDifferenceDe.js" type="text/javascript"></script>
+		<!--<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>-->
+		<!--<script src="js/plugins/layer/laydate/laydate.js"></script>-->
+		
+		<script type="text/javascript">
+		
+	
+    var echartsLineWeek = echarts.init(document.getElementById("echarts-line-chartWeek"));
+    var lineoption = {
+        title : {
+            text: '一周能耗分析'
+        },
+        tooltip : {
+            trigger: 'axis'
+        },
+        legend: {
+            data:['用电量','功率']
+        },
+        grid:{
+            x:40,
+            x2:40,
+            y2:24
+        },
+        color : [  '#60C0DD', '#9BCA63' ],
+        calculable : true,
+        xAxis : [
+            {
+                type : 'category',
+                boundaryGap : true,
+				axisTick : {
+            		inside: false,            
+        	},        		
+                data : []
+            }
+        ],
+        yAxis : [             //为什么设置不到双y轴
+              {
+                type : 'value',
+                min:0,
+                
+                axisLabel:{
+                	textStyle:{
+                		color:'orange'
+                	}               	
+                },
+                name:'用电量(度)',
+                nameTextStyle:{
+                	color:'orange'
+                }
+           },
+           {
+                type : 'value',
+                min:0,
+                
+                axisLabel:{
+                	textStyle:{
+                		color:'skyblue'
+                	}               	
+                },
+                name:'功率(w)',
+                nameTextStyle:{
+                	color:'skyblue'
+                }
+           }
+        ],
+        series : [
+            {
+                name:'用电量',
+                type:'bar',
+                data:[],
+                barWidth:25,
+                markPoint : {
+                    data : [
+                        {type : 'max', name: '最大值'},
+                        {type : 'min', name: '最小值'}
+                    ]
+                },
+                yAxisIndex: 0,
+                markLine : {
+                    data : [
+                        {type : 'average', name: '平均值'}
+                    ]
+                }
+            },
+            {
+                name:'功率',
+                type:'bar',
+                data:[],
+                barWidth:25,
+                markPoint : {
+                    data : [
+                        {type : 'max', name: '最大值'},
+                        {type : 'min', name: '最小值'}
+                    ]
+                },
+                yAxisIndex: 1,
+                markLine : {
+                    data : [
+                        {type : 'average', name: '平均值'}
+                    ]
+                }
+            }
+        ]
+    };
+    echartsLineWeek.setOption(lineoption);
+    echartsLineWeek.showLoading();
+    $(window).resize(echartsLineWeek.resize);
+
+    
+
+		
+		
+		
+			
+//			选择周列表
+			var weeklist="";			
+			for (var i=1;i<12;i++) {
+				weeklist+="<option >第"+i+"周</option>"
+			}
+			var addWeek=$('.addWeek').html(weeklist);
+			
+//			选择月列表
+			var monthlist="";			
+			for (var i=1;i<13;i++) {
+				monthlist+="<option >第"+i+"月</option>"
+			}
+			var addMonth=$('.addMonth').html(monthlist);
+			
+//			选择电表列表
+			var Kwhlist="";			
+			for (var i=1;i<12;i++) {
+				Kwhlist+="<option >"+i+"</option>"
+			}
+			var chooseDev=$('.chooseDev').html(Kwhlist);
+		
+			//图表更新数据
+			$(".checkWeek").click(function(){
+				//选中的电表值，日期值，周期值			
+				var devWeek=$('.devWeek option:selected') .val();
+				var week=$(".week").val();
+//				var timeWeek=$(".timeWeek").val();
+//				var optionWeek=$('.optionWeek option:selected') .val();
+			console.log(devWeek+"  "+week);
+
+	
+			
+//			jQuery.support.cors = true;
+			$.ajax({
+				url: "http://192.168.3.62:8080/data/oneNodeData",
+				type: 'post',
+				data: {nodeId:devWeek,condition:week},
+				dataType: "json",
+				xhrFields: {
+					withCredentials: true
+				},
+				crossDomain: true,
+				success: function(data) {
+					console.log(data);
+					echartsLineWeek.hideLoading();
+					echartsLineWeek.setOption({
+						xAxis: {
+							type: 'category',							
+							data: data.time
+						},
+						series: [{
+							name: '用电量',
+							type: 'line',
+							data: data.total_power
+						},
+						{
+							name: '功率',
+							type: 'line',
+							data: data.power
+						},
+						]
+
+					});
+					
+
+				},
+				error: function() {
+					echartsLineWeek.hideLoading();
+					  	console.log('error');  
+				}
+			});
+			});
+		</script>
+	</body>
+
+</html>

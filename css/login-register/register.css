@@ -1,0 +1,217 @@
+.content{
+				width: 100%;
+				height: 100%;	
+			}
+			.top {
+				width: 80%;
+				height: 60px;
+				margin-left: 10%;
+				
+			}
+			.row{
+				width: 95%;
+				height: 100%;
+				margin: auto 5%;
+			}
+			.top-img {
+				width: 136px;
+				height: 60px;
+			}
+			
+			.apart {
+				width: 1px;
+				height: 40px;
+				line-height: 40px;
+				border-right: 1px solid black;
+				display: inline-block;
+				text-align: center;
+				margin: 20px 20px -20px 20px;
+			}
+			
+			.top-text{
+				font-size: 22px;
+				padding-top: 50px;
+				font-family: "微软雅黑";
+				color: #3e3e3e;
+   				font-weight: 700;
+   				
+    			
+			}
+			
+			.main {
+				width: 100%;
+				height: 610px;
+				margin: 20px 0px 5px -30px;
+				background: url(../../img/bg.png) no-repeat;
+				background-size:100% 98% ;
+				position: relative;
+				
+			}
+			.main-form{
+				width:350px;
+				height:440px;
+				background: rgba(240,255,255,1);
+				position: absolute;
+				top:12%;
+				right: 6%;
+			}
+			
+			.form-main{
+				width: 100%;
+				height: 60%;
+				position: relative;
+				margin:0 auto;
+			}
+			
+			.login-new {
+				text-align: center;
+				font-size:16px;
+				
+				font-family: "微软雅黑";
+				color: #3e3e3e;
+   				font-weight: 600;
+   				padding-top: 10px;
+   				
+			}
+			.form-input{
+				width: 100%;
+				margin:20px auto 0 30px; 
+				
+			}
+			.input{
+				padding-left: 50px;
+				width: 80%;
+				height: 35px;
+				margin: 0 0 25px 0;
+				outline-style: none;
+				border: 1px solid #E3E3E3;
+				background: transparent;
+			}
+			.tip{
+				position: absolute;
+				left: 30px;
+				padding-left: 20px;
+				display: none;
+				background: url(../../img/zy_error.jpg) no-repeat;
+			}
+			.writeTure{
+				position: absolute;
+				right:8px;
+				
+				padding-left: 25px;
+				display: none;
+				background: url(../../img/zy_right.png) no-repeat;
+				height: 26px;
+				width: 26px;
+			}
+			.useTrue{
+				top: 55px;
+			}
+			.emailTrue{
+				top: 115px;
+			}
+			.passwordTrue{
+				top: 175px;
+			}
+			.realpasswordTrue{
+				top: 235px;
+			}
+			.input-use{
+				background: url(../../img/username-input_4485dfc.png) no-repeat;
+				position: relative;
+						}
+			
+			#usernameTip{
+				top: 85px;
+				
+			}
+			.input-email{
+				background: url(../../img/email.png) no-repeat transparent;
+				
+			}
+			#emailTip,#realemailTip{
+				top: 145px;
+				
+			}
+			.input-password,.input-realpassword{	
+				background: url(../../img/password-input_d4f84c3.png) no-repeat;
+			}
+			#passwordTip{
+				
+				top: 205px;
+				
+			}
+			#realpasswordTip,#samepasswordTip{
+				top:265px;	
+			}
+			
+			.input-captcha{
+				width: 46%;
+				background: url(../../img/dynamic-input_ca88868.png) no-repeat;
+			}
+			.get-captcha{
+				background: #d9534f;
+				height: 35px;
+				outline:none;
+				text-align: center;
+				font-size: 12px;
+				padding-bottom: 5px;
+			}
+			.captcha{
+				margin: auto;
+				
+			}
+			#captchaTip{
+				top: 325px;
+				
+				
+			}
+			.login-add{
+				width: 80%;
+				height: 30px;
+				position: relative;
+				margin: 0 0 5px 30px;
+			}
+			.forget-password{
+				position: absolute;
+				right: 0px;
+			}
+			.login{
+				width: 80%;
+				height: 30px;
+				margin:0 0 0 30px ;
+				
+			}
+			.form-footer{
+				width: 100%;
+				height:95px;
+				background: #e3e3e3;
+				position: relative;
+				font-size: 12px;
+			}
+			.other-use{
+				position: absolute;
+				
+				top: 10px;
+				left: 30px;
+			}
+			
+			.use-type {
+				position: absolute;
+				bottom: 15px;
+				left: -10px;	
+			}
+			.use-type li{
+				margin-right: 10px;
+			}
+			.new-use{
+				position: absolute;
+				bottom: 10px;
+				right: 30px;
+				color: orange;
+				cursor: pointer;
+				font-size: 12px;
+			}
+			.new-use:hover{
+				color: orange;
+			}

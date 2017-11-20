@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+		 <link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+		 <link href="css/animate.css" rel="stylesheet">
+		<style type="text/css">
+			body,
+			html,
+			#allmap {
+				width: 100%;
+				height: 100%;
+				overflow: hidden;
+				margin: 0;
+				font-family: "微软雅黑";
+			}
+		</style>
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=GTAn7bvuVedgR4X09kzvxqYmvT6P0tnY"></script>
+		<title>地图展示</title>
+
+	</head>
+	<!--设备管理/设备位置和控制-->
+
+	<body>
+		<div id="allmap"></div>
+	</body>
+
+<!--模态弹出框-->
+
+	<div id="mymodal" class="modal fade" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-6 b-r">
+                            <h3 class="m-t-none m-b">登录</h3>
+                            <form role="form">
+                                <div class="form-group">
+                                    <label>用户名：</label>
+                                    <input type="email" placeholder="请输入用户名" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>密码：</label>
+                                    <input type="password" placeholder="请输入密码" class="form-control">
+                                </div>
+                                <div>
+                                    <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>登录</strong>
+                                    </button>
+                                    <label>
+                                        <input type="checkbox" class="i-checks">自动登录</label>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-sm-6">
+                            <h4>还不是会员？</h4>
+                            <p>您可以注册一个账户</p>
+                            <p class="text-center">
+                                <a href="form_basic.html"><i class="fa fa-sign-in big-icon"></i></a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</html>
+<!-- 全局js -->
+		<script src="js/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		 <!-- iCheck -->
+    <script src="js/plugins/iCheck/icheck.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+        });
+    </script>
+<script type="text/javascript">
+	 var markerArr=[{point: "113.439455,22.519845"},{point: "113.436455,22.516845"}];
+	var map = new BMap.Map("allmap"); // 创建地图实例  
+	var point = new BMap.Point(113.439455, 22.519845); // 创建点坐标  
+	
+	map.centerAndZoom(point, 15); // 初始化地图，设置中心点坐标和地图级别  
+
+	var marker = new BMap.Marker(point); // 创建标注    
+	
+	map.addOverlay(marker); // 将标注添加到地图中 
+	var point = new Array(); //存放标注点经纬信息的数组  
+    var marker = new Array(); //存放标注点对象的数组  
+    for (var i = 0; i < markerArr.length; i++) { 
+    	 var p0 = markerArr[i].point.split(",")[0]; //  
+         var p1 = markerArr[i].point.split(",")[1]; //按照原数组的point格式将地图点坐标的经纬度分别提出来  
+        point[i] = new window.BMap.Point(p0, p1); //循环生成新的地图点  
+        marker[i] = new window.BMap.Marker(point[i]); //按照地图点坐标生成标记  
+        map.addOverlay(marker[i]);  
+        
+    }
+	marker[0].addEventListener("click", function(e) {
+//		打开模态框
+//	$('#mymodal').modal('toggle');
+	
+		var opts = {
+//			width: 250, // 信息窗口宽度    
+//			height: 100, // 信息窗口高度    
+			title: "设备位置" // 信息窗口标题   
+		}
+		var content="我是电表设备";
+		var infoWindow = new BMap.InfoWindow(content, opts); // 创建信息窗口对象    
+		map.openInfoWindow(infoWindow, map.getCenter()); // 打开信息窗口
+
+	});
+
+	map.addControl(new BMap.NavigationControl());
+	map.addControl(new BMap.ScaleControl());
+	map.addControl(new BMap.OverviewMapControl());
+	map.addControl(new BMap.MapTypeControl());
+
+	map.setCurrentCity("中山"); // 设置地图显示的城市 此项是必须设置的
+	map.enableScrollWheelZoom(true); //开启鼠标滚轮缩放
+</script>

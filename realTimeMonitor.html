@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>实时数据监测</title>
+		<link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+		<link href="css/animate.css" rel="stylesheet">
+		<link href="css/style.css?v=4.1.0" rel="stylesheet">
+		<link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+		<link rel="stylesheet" href="css/dataDevice.css"/>
+		<style type="text/css">
+			.iboxBlue {
+				background: skyblue;
+				margin-bottom: 20px;
+			}
+			.devID {
+				right: 145px;
+			}
+			
+		</style>
+	</head>
+
+	<body class="gray-bg">
+
+		<div class="wrapper wrapper-content animated fadeInRight">
+
+			<div class="row">
+
+				<div class="ibox-title iboxBlue">
+					<h5>实时数据监测</h5>
+					<div class="ibox-tools">
+						<div class="btn-group" role="group">
+							<button type="button" class="btn btn-default posrig devID">电表ID</button>
+							<select name="deviceId" class="posrig chooseDev devWeek">
+								<option value="1">1</option>
+							</select>
+
+						</div>
+						
+						<input class="week" type="hidden" name="condition" value="week" />
+						<button class="btn btn-info posrig check checkWeek">查询</button>
+						<button class="btn btn-warning btn-xs posrig help">帮助</button>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="ibox float-e-margins">
+
+						<div class="ibox-content">
+							<div id="trendsElectricity" style="width: 100%;height: 250px;"></div>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="ibox float-e-margins">
+
+						<div class="ibox-content">
+							<div id="trendsVoltage" style="width: 100%;height: 250px;"></div>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="ibox float-e-margins">
+
+						<div class="ibox-content">
+							<div id="trendsCapacity" style="width: 100%;height: 250px;"></div>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="ibox float-e-margins">
+
+						<div class="ibox-content">
+							<div id="kWhArea" style="width: 100%;height: 250px;"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<!-- 全局js -->
+		<script src="js/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		
+		<script src="js/charts/echarts.min.js"></script>
+		<script src="js/charts/lineChartRealTime.js"></script>
+		<script src="js/charts/lineChartKwh.js"></script>
+		
+		<script src="js/url.js"></script>
+		<script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+		<script type="text/javascript">
+			//	帮助
+			$(".help").click(function help() {
+				swal("单电表能耗查询", "通过选择右上角的对应查询条件\r\n\r\n查看相应的数据图表");
+			});
+
+			//根据设备数量设置设备下拉框
+			var storage = window.localStorage;
+			var deviceCount = storage.getItem("deviceCount");
+			console.log(deviceCount);
+			//选择电表列表
+			var Kwhlist = "";			
+			for(var i = 1; i <= deviceCount; i++) {
+				Kwhlist += "<option value="+i+">" + i + "</option>";
+			}				
+			var chooseDev = $('.chooseDev').html(Kwhlist);
+
+			//近周图表更新数据
+			var indexReturn;			
+			$(".checkWeek").click(function() {
+				indexReturn =window.setTimeout(function(){
+				//选中的电表值，日期值，周期值			
+				var devWeek = $('.devWeek option:selected').val();
+
+				console.log(devWeek);
+				trendsElectricity.showLoading();
+				trendsVoltage.showLoading();
+				trendsCapacity.showLoading();
+				kWhArea.showLoading();
+				//jQuery.support.cors = true;
+				$.ajax({
+					url: url + "data/realTimeData",
+					type: 'post',
+					data: {
+						deviceId: devWeek
+					},
+					dataType: "json",
+					xhrFields: {
+						withCredentials: true
+					},
+					crossDomain: true,
+					success: function(data) {
+						trendsElectricity.hideLoading();
+						trendsVoltage.hideLoading();
+						trendsCapacity.hideLoading();
+						kWhArea.hideLoading();
+						console.log(data);
+
+						//console.log(typeof optionTime+" "+typeof data[i].data.electricity);
+						//把数据放到数组
+						var array1 = new Array(data.length);
+						var array2 = new Array(data.length);
+						var array3 = new Array(data.length);
+						var array4 = new Array(data.length);
+						var array5 = new Array(data.length);
+						for(var i = 0; i < data.length; i++) {
+							// 转换时间戳	
+							var d = new Date(data[i].data.time);
+							var year = d.getFullYear();
+							var month = d.getMonth() + 1;
+							var date = d.getDate();
+							var hour = d.getHours();
+							var minute = d.getMinutes();
+							var second = d.getSeconds();
+							var optionTime = hour + ":" + minute + ":" + second;
+
+							array1[i] = optionTime;
+							array2[i] = data[i].data.electricity;
+							array3[i] = data[i].data.voltage;
+							array4[i] = data[i].data.power;
+							array5[i] = data[i].data.totalPower;
+
+						}
+
+						//实时电流
+						trendsElectricity.setOption({
+							xAxis: {
+								data: array1
+							},
+							series: [{
+								name: '电流',
+								type: 'line',
+								data: array2
+							}]
+
+						});
+						//实时电压
+						trendsVoltage.setOption({
+							xAxis: {
+								type: 'category',
+								data: array1
+							},
+							series: [{
+								name: '电压',
+								type: 'line',
+								data: array3
+							}]
+
+						});
+						//实时功率
+						trendsCapacity.setOption({
+							xAxis: {
+								type: 'category',
+								data: array1
+							},
+							series: [{
+								name: '功率',
+								type: 'line',
+								data: array4
+							}]
+
+						});
+
+						//实时用电量
+						kWhArea.setOption({
+							xAxis: {
+								type: 'category',
+								data: array1
+							},
+							series: [{
+								name: '用电量',
+								type: 'line',
+								data: array5
+
+							}]
+
+						});
+
+						console.log(array1 + " " + array2 + " " + array3 + " " + array4 + " " + array5);
+					},
+					error: function() {
+						trendsElectricity.hideLoading();
+						alert('error');  
+					}
+				});
+
+			},5000);
+//			清除定时器
+			window.clearTimeout(indexReturn);
+			});			
+				
+		</script>
+	</body>
+
+</html>

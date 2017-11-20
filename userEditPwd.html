@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title> - 表单验证 jQuery Validation</title>
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+
+		<link rel="shortcut icon" href="favicon.ico">
+		<link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+		<link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+		<link href="css/animate.css" rel="stylesheet">
+		<link href="css/style.css?v=4.1.0" rel="stylesheet">
+		<link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+		<style type="text/css">
+			.form-group{
+				margin-bottom: 30px;
+			}
+			.Cheek{
+				position: relative;
+				
+			}
+			.pastPasswordCheck{
+				display: none;
+				color: red;
+				position: absolute;
+				top: 37px;
+				left: 290px;
+			}
+			.samePwdCheck{
+				display: none;
+				color: red;
+				position: absolute;
+				top: 37px;
+				left:15px;
+			}
+		</style>
+	</head>
+	<!--管理员管理/管理员个人密码修改-->
+
+	<body class="gray-bg">
+		<div class="wrapper wrapper-content animated fadeInRight">
+
+			<div class="row">
+
+				<div class="col-sm-12">
+					<div class="ibox float-e-margins">
+						<div class="ibox-title">
+							<h5>修改密码</h5>
+
+						</div>
+						<div class="ibox-content">
+							<form class="form-horizontal" id="pwdForm">
+
+								<div class="form-group">
+									<label class="col-sm-3 control-label">账户：</label>
+									<div class="col-sm-8">
+										<input id="name" name="name" class="form-control" type="text" value="zspt" disabled="disabled" aria-required="true" aria-invalid="true">
+									</div>
+								</div>
+								<div class="form-group Cheek">
+									<label class="col-sm-3 control-label">旧密码：</label>
+									<div class="col-sm-8">
+										<input id="pastPassword" name="pastPassword" class="form-control" type="password">
+									</div>
+									<span class="pastPasswordCheck">* 密码错误，重新输入</span>
+										
+									
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label">新密码：</label>
+									<div class="col-sm-8">
+										<input id="newPassword" name="newPassword" class="form-control" type="password">
+									</div>
+								</div>
+								<div class="form-group Cheek">
+									<label class="col-sm-3 control-label">确认密码：</label>
+									<div class="col-sm-8">
+										<input id="confirm_password" name="confirm_password" class="form-control" type="password">
+										<span class="samePwdCheck">* 两次密码不一样</span>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-sm-8 col-sm-offset-3">
+										<button id="pwdModify" class="btn btn-primary" type="button">确认修改</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<!-- 全局js -->
+		<script src="js/jquery.min.js?v=2.1.4"></script>
+		<script src="js/bootstrap.min.js?v=3.3.6"></script>
+
+		<!-- 自定义js -->
+		<script src="js/content.js?v=1.0.0"></script>
+
+		<!-- jQuery Validation plugin javascript-->
+		<script src="js/plugins/validate/jquery.validate.min.js"></script>
+		<script src="js/plugins/validate/messages_zh.min.js"></script>
+		<script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+		<script src="js/demo/form-validate-demo.js"></script>
+		<script src="js/url.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			
+			var storage = window.localStorage;	
+			
+			var name = storage.getItem("name");
+			$("#name").val(name);
+			//验证旧密码
+			$("#newPassword").click(function() {
+				//jQuery.support.cors = true;
+				var name = $("#name").val();
+				var pastPassword = $("#pastPassword").val();
+				$.ajax({
+					url: url + "user/currentPassword",
+					type: 'post',
+					data: {
+						name:name,password: pastPassword
+					},
+					dataType: "json",
+					xhrFields: {
+						withCredentials: true
+					},
+					crossDomain: true,
+					success: function(data) {
+						console.log(data);
+						//							旧密码正确,允许更改密码，否则不允许
+						if(data.msg == "密码错误") {
+							$(".pastPasswordCheck").show();
+							$("#pastPassword").focus();
+						} else if(data.msg == "通过") {
+							$(".pastPasswordCheck").css("color","#00BFFF");
+							$(".pastPasswordCheck").html("* 密码正确,请继续修改");
+							$(".pastPasswordCheck").show();
+							$("#newPassword").focus();
+						}
+						//旧密码超过3次的处理
+//						if(data.number == 3) {
+//							window.location.href = "register.html";
+//						}
+					},
+					error: function() {
+						console.log('error');
+					}
+				});
+			})
+			//验证两次密码是否一样
+			$("#confirm_password").blur(function(){
+				var newPassword = $("#newPassword").val();
+				var confirm_password = $("#confirm_password").val();
+				if(newPassword != confirm_password){
+					$(".samePwdCheck").show();
+					$("#confirm_password").focus();
+				}else{
+					$(".samePwdCheck").hide();
+				}
+			})
+			
+			//提交密码更改表单
+			$("#pwdModify").click(function(){
+				swal({
+				title : "提交密码？",
+				text : "您确定要提交密码吗？",
+				type : "warning",
+				showCancelButton : true,
+				confirmButtonColor : "#DD6B55",
+				confirmButtonText : "提交",
+				closeOnConfirm : false,
+			},function modifyPwd() {
+//				event.preventDefault();
+//				jQuery.support.cors = true;
+				var name = $("#name").val();
+				var newPassword = $("#confirm_password").val();
+				console.log("newPassword:" + newPassword);
+				$.ajax({
+					url: url + "user/updatePassword",
+					type: 'post',
+					data: {name:name,password:newPassword},
+					dataType: "json",
+					xhrFields: {
+						withCredentials: true
+					},
+					crossDomain: true,
+//					aysnc:false,
+					success: function(data) {
+						console.log(data);
+						swal({
+								title: "提交成功！",
+								text: "您已经成功修改密码！",
+								type: "success",
+								showCancelButton: false,
+								confirmButtonColor: "#44BB44",
+								confirmButtonText: "确定",
+								closeOnConfirm: true,
+							});
+						
+					},
+					error: function() {
+						console.log('error');
+					}
+				});
+			})
+			});
+		</script>
+	</body>
+
+</html>

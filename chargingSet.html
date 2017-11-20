@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>-</title>
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+		<link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+		<link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+		<link href="css/style.css?v=4.1.0" rel="stylesheet">
+		<!-- Sweet Alert -->
+		<link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+		<style>
+
+		</style>
+	</head>
+	<!--计费管理/电费设置-->
+	<body class="gray-bg">
+		<div class="wrapper wrapper-content animated fadeInRight">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="ibox float-e-margins panel-primary">
+						<div class="ibox-title panel-heading">
+							<h5>电价设置</h5>
+							<div class="ibox-tools"></div>
+						</div>
+						<div class="ibox-content">
+							<div class="row">
+								<div class="col-sm-1" style="float: right;">
+									<div class="input-group ">
+										<a type="button" class="btn btn-sm btn-info" id="showbt" style="display: none">编辑</a>
+									</div>
+								</div>
+								<p style="width: auto;">
+									<span><i class="fa fa-random"></i></span>&nbsp;设置电价。电价用于计算每个路灯和所有路灯的每月和每年能耗的费用,请选择实际的电价（以下电价来自本市供电局，如有疑问请咨询供电局！）。
+								</p>
+								<p style="color: red;  width: auto;">
+									<i class="fa fa-exclamation-circle col-sm-1" style="display: none" id="tips1"></i>&nbsp;<span id="tips"></span>
+								</p>
+							</div>
+							<form id="eng" class="form-horizontal m-t" id="signupForm" onsubmit="return check()">
+								<div class="form-group">
+									<label class="col-sm-3 control-label">选择电价:</label>
+									<div class="col-sm-8">
+										<select class="form-control" id=electrovalence name="electrovalence">
+											<option value="0.8">民用用电电价：0.8元/度</option>
+											<option value="1.5">工业用电电价：1.5元/度</option>
+											<option value="1.2">公共用电电价：1.2元/度</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-sm-6 col-sm-offset-3">
+										<button class="btn btn-sm btn-info btn-rounded btn-block" type="submit" id="save">保存</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 全局js -->
+		<script src="js/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<!-- Sweet alert -->
+		<script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+		<script src="js/url.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			console.log("-----", "1.5");
+			if("1.5" != 0.0) {
+				//console.log("--***---","");
+				$("#tips").html("您已设置电价：" + "1.5" + "元/度。如果要修改电价请点击右上方编辑按钮！");
+				$("#tips1").css('display', 'block');
+				$("#showbt").css('display', 'block');
+				$("#save").css('display', 'none');
+				$("#electrovalence").attr("readonly", "readonly");
+			}
+			$("#showbt").click('click', function() {
+				$('#save').css('display', 'block');
+				$("#electrovalence").removeAttr("readonly");
+			});
+
+			function check() {
+				swal({
+					title: "提交电价？",
+					text: "您确定要提交电价吗？",
+					type: "warning",
+					showCancelButton: true,
+					confirmButtonColor: "#DD6B55",
+					confirmButtonText: "提交",
+					closeOnConfirm: false,
+				}, function() {
+					window.localURL = window.parent.localURL || '';
+					var electrovalence = $("#electrovalence").val();
+					console.log("electrovalence::" + electrovalence);
+					$.ajax({
+						type: "POST",
+						xhrFields: {
+							withCredentials: true
+						},
+						crossDomain: true,
+						url: localURL + "/pointsEnergy/savePrices",
+						data: {
+							prices: electrovalence,
+						},
+						dataType: "json",
+						success: function(data) {
+							console.log(data);
+							if(data) {
+								swal({
+									title: "提交成功！",
+									text: "您已经成功设置电价！",
+									type: "success",
+									showCancelButton: false,
+									confirmButtonColor: "#44BB44",
+									confirmButtonText: "确定",
+									closeOnConfirm: false,
+								}, function() {
+									window.location.href = localURL +
+										"/pointsEnergy/prices";
+								});
+							}
+						},
+						error: function() {
+							swal("添加失败！", "服务器繁忙，添加请求失败，请重试，谢谢！", "success");
+						}
+					});
+				});
+				return false;
+			}
+		</script>
+	</body>
+
+</html>

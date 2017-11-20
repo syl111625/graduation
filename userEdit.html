@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>用户管理-修改资料</title>
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+
+		<link rel="shortcut icon" href="favicon.ico">
+		<link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+		<link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+		<link href="css/animate.css" rel="stylesheet">
+		<link href="css/style.css?v=4.1.0" rel="stylesheet">
+		<style type="text/css">
+			.controlSize {
+				height: 32px;
+			}
+		</style>
+	</head>
+	<!--管理员管理/编辑管理员个人详细资料-->
+
+	<body class="gray-bg">
+		<div class="wrapper wrapper-content animated fadeInRight">
+
+			<div class="row">
+
+				<div class="col-sm-12">
+					<div class="ibox float-e-margins">
+						<div class="ibox-title">
+							<h5>用户管理-修改资料</h5>
+
+						</div>
+						<div class="ibox-content">
+							<form class="form-horizontal" id="userModifyForm">
+								<div class="form-group">
+									<label class="col-sm-3 control-label">id：</label>
+									<div class="col-sm-8">
+										<input id="id" name="id" class="form-control" type="text" aria-required="true" aria-invalid="true">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label">姓名：</label>
+									<div class="col-sm-8">
+										<input id="name" name="name" class="form-control" type="text">
+									</div>
+								</div>
+								<div class="form-group">
+									<!--<label class="col-sm-3 control-label">密码：</label>-->
+									<div class="col-sm-8">
+										<input id="password" name="password" class="form-control" type="hidden">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label">邮箱：</label>
+									<div class="col-sm-8">
+										<input id="email" name="email" class="form-control" type="text" aria-required="true" aria-invalid="true">
+									</div>
+								</div>
+								<div class="form-group">
+										<label class="col-sm-3 control-label">角色：</label>
+										<div class="col-sm-8">
+
+											<select id="role" name="role" class="form-control controlSize">
+												<option value="admin">管理员</option>
+												<option value="maintenance man">维修员</option>
+											</select>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label">账号状态：</label>
+										<div class="col-sm-8">
+
+											<select id="isUse" name="isUse" class="form-control controlSize">
+												<option value="0">停用</option>
+												<option value="1">启用</option>
+											</select>
+										</div>
+									</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label">创建时间：</label>
+									<div class="col-sm-8">
+										<input id="createTime" name="createTime" class="form-control" type="text" aria-required="true" aria-invalid="false" class="valid">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label">更新时间：</label>
+									<div class="col-sm-8">
+										<input id="updateTime" name="updateTime" class="form-control" type="text" aria-required="true" aria-invalid="false" class="valid">
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-sm-8 col-sm-offset-3">
+										<button type="button" class="btn btn-primary userModify">提交</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<!-- 全局js -->
+		<script src="js/jquery.min.js?v=2.1.4"></script>
+		<script src="js/bootstrap.min.js?v=3.3.6"></script>
+
+		<!-- 自定义js -->
+		<script src="js/content.js?v=1.0.0"></script>
+
+		<!-- jQuery Validation plugin javascript-->
+		<script src="js/plugins/validate/jquery.validate.min.js"></script>
+		<script src="js/plugins/validate/messages_zh.min.js"></script>
+
+		<script src="js/demo/form-validate-demo.js"></script>
+		<script src="js/url.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			
+			
+			//从本地存储中获取当前用户信息
+			var storage = window.localStorage;	
+			var id = storage.getItem("id");
+			var name = storage.getItem("name");
+			var email = storage.getItem("email");
+			var password = storage.getItem("password");
+			
+			var role = storage.getItem("role");	
+			var isUse = storage.getItem("isUse");
+			var createTime = storage.getItem("createTime");
+			var updateTime = storage.getItem("updateTime");
+			
+						//转换用户类型和使用状态
+						if(role == "admin") {
+							userole = "管理员";
+						} else if(role == "maintenance man") {
+							userole = "维修员";
+						}
+						if(isUse == 0) {
+							useState = "停用";
+						} else if(isUse == 1) {
+							useState = "启用";
+						}
+			 			
+			$("#id").val(id);
+			$("#name").val(name);
+			$("#email").val(email);
+			$("#password").val(password);
+			$("#role").val(role);
+			$("#isUse").val(isUse);
+			$("#createTime").val(createTime);
+			$("#updateTime").val(updateTime);
+			console.log(id,name,email,password,userole,useState,createTime,updateTime);
+			
+			
+			//提交更改个人信息表单
+			$(".userModify").click(function() {
+				//jQuery.support.cors = true;
+				$.ajax({
+					url: url + "user/updatePersonalInformation",
+					type: 'post',
+					data: $("#userModifyForm").serialize(),
+					dataType: "json",
+					xhrFields: {
+						withCredentials: true
+					},
+					crossDomain: true,
+					async: false,
+					success: function(data) {
+							console.log(data);
+							window.location.href="userList.html";
+					},
+					error: function() {
+						alert('error');
+					}
+				});
+			})
+		</script>
+	</body>
+
+</html>

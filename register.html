@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Document</title>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/login-register/register.css"/>
+		
+	</head>
+
+	<body>
+		<div class="content">
+			<div class="row">
+			<!--<div class=" top ">
+				<img class="top-img" src="img/hciot-logo.png" />
+				<span class="apart"></span>
+				<span class="top-text">新用户注册</span>
+			</div>-->
+			<!--用户注册-->
+			<div class=" main ">
+			
+				<div class=" main-form  clearfix">
+					
+					<div class="form-main ">
+						
+						<h4 class="login-new ">新用户注册</h4>
+						<div class="form-input">
+							<form id="register-form">	
+								<div >
+									<input value="admin"  name="role" type="hidden">
+									<input value="" id="username" name="name" type="text"  class="input input-use" placeholder="用户名(4-20位字母和数字)" required>
+									<span id="usernameTip" class="tip">用户名不能为空</span>
+									<span class="writeTure useTrue"></span>
+									
+									<input value="" id="email" name="email" type="email" class="input input-email" placeholder="请输入正确的邮箱" required>
+									<span id="emailTip" class="tip">邮箱不能为空</span>
+									
+									<span class="writeTure emailTrue"></span>
+									
+									<input value="" id="password" name="password" type="password" class="input input-password" maxlength="16" placeholder="密码(6-20位字母\数字\下划线)" required>
+									<span id="passwordTip" class="tip">密码不能为空</span>
+									<span class="writeTure passwordTrue"></span>
+									
+									<input value="" id="realpassword" name="realpassword" type="password" class="input input-realpassword" maxlength="16" placeholder="再次输入密码" required>
+									<span id="realpasswordTip" class="tip">确认密码不能为空</span>
+									<span id="samepasswordTip" class="tip">两次密码不一样</span>
+									<span class="writeTure realpasswordTrue"></span>
+									
+									<!--<div class="captcha">-->										
+									<input value="" id="captcha" name="captcha"  type="text" class="input input-captcha" placeholder="输入验证码" required />
+									<span id="captchaTip" class="tip">验证码不能为空</span>
+									<!--<button class="btn btn-danger btn-sm get-captcha">获取验证码</button>-->
+									<img src="http://120.78.138.98:8080/register/getCaptcha" id="captchaImg">
+									<!--</div>-->
+								</div>
+							</form>
+						</div>
+						<div class="login-add">
+							<input type="checkbox" /><span>我已阅读并同意服务条款</span>
+							<!--<span class="forget-password">忘记密码</span>-->
+						</div>
+						<button class="btn btn-danger login" type="submit" id="registerSubmit">注&nbsp;&nbsp;册</button>
+					</div>
+					
+				</div>
+			</div>
+			</div>
+			
+		</div>
+	</body>
+	<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/login-register/register.js" type="text/javascript"></script>
+	<script src="js/url.js" type="text/javascript"></script>
+<script type="text/javascript">
+	
+	console.log(url);
+//	校验用户名
+	$("#username").blur(function checkusername(){
+	
+	var username=document.getElementById('username').value;
+	if(username!=""){
+		 jQuery.support.cors = true;
+    $.ajax({
+        type: "GET",
+        url: url+"register/isUsernameActived?name="+username,
+//      xhrFields: {
+//         withCredentials: true
+//      },
+//      crossDomain: true,
+        dataType: "json",
+        success: function (data)
+        {
+        	console.log(data);
+            if(data.code=="200"){
+//             alert("用户名可注册");
+	
+            }else if(data.code=="401"){
+            	
+            	$("#username").focus();
+            	$("#usernameTip").html("用户名已注册");
+            	$("#usernameTip").show();
+                 
+            }
+        },
+        error:function () {      
+          
+        }
+     });}
+    });
+//	校验邮箱
+	$("#email").blur(function checkemail(){
+     var email=document.getElementById('email').value;
+     var temp=/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+     if(temp.test(email)){
+     	 jQuery.support.cors = true;
+         $.ajax({
+        type: "GET",
+        url: url+"register/isEmailActived?email="+email,
+//      xhrFields: {
+//         withCredentials: true
+//      },
+//      crossDomain: true,
+        dataType: "json",
+        success: function (data)
+        {
+            if(data.code=="200"){
+             console.log("邮箱可注册");
+              
+            }else if(data.code=="402"){
+            	$("#email").focus();
+            	$("#emailTip").html("邮箱已被使用");
+            	$("#emailTip").show();
+                 console.log("邮箱已被使用");  
+            }
+        },
+        error:function () {      
+            alert("未知错误");
+        }
+     });}
+     });
+//	随机获得验证码
+	$("#captchaImg").click(function(){
+		$('#captchaImg').attr('src',url+'register/getCaptcha?t='+Math.random());
+		
+	});
+//	校验验证码
+	$("#captcha").blur(function checkcaptcha(){
+          var captcha=document.getElementById('captcha').value;
+       	  var captchaTip=document.getElementById('captchaTip');
+//     	   jQuery.support.cors = true;
+       if(captcha!="")
+       
+         $.ajax({
+        type: "get",
+        url: url+"register/verifyCaptcha?captcha="+captcha, 	
+        dataType: "json",
+        xhrFields: {
+           withCredentials: true
+        },
+        crossDomain: true,
+        beforeSend: function (xhr) {  
+           xhr.setRequestHeader("Access-Control-Allow-Origin", "*");  
+       },
+        success: function (data)
+        {
+        	console.log(data);
+//      	alert(data.code);
+            if(data.code=="10001"){
+     			captchaTip.innerHTML="请输入验证码";
+     			captchaTip.style.display="block";
+//              alert("请输入验证码");
+            }
+            else if(data.code=="412"){
+          		captchaTip.innerHTML="验证码已过期";
+     			captchaTip.style.display="block";
+//               alert("验证码已过期");  
+            }
+            else if(data.code=="403"){
+         		captchaTip.innerHTML="验证码错误";
+     			captchaTip.style.display="block";
+//              alert("验证码错误");  
+        	}else if(data.code=="200"){
+        		
+//               alert("验证码正确"); 
+        	}
+        	return data.code;
+        },
+        error:function () {      
+          console.log("未知错误");
+        }
+     });
+	})
+     
+
+//   提交表单并校验   
+   $("#registerSubmit").click(function register(){
+   	   var captcha=document.getElementById('captcha').value;            
+       checkNull();  
+//      jQuery.support.cors = true;
+         $.ajax({
+        type: "POST",
+//      url: url+"userRegister/addUser?captcha="+captcha,  
+        url: url+"register/saveUser",
+        data:$("#register-form").serialize(),
+        dataType: "json",
+        xhrFields: {
+           withCredentials: true
+        },
+        crossDomain: true,
+      
+        success: function (data)
+        {
+
+		console.log(data);
+
+            if(data.code == "200" ){
+               window.location.href="login.html";
+
+            }else if(data.code=="11111"){
+            	 alert("注册失败，请稍后重试！");
+                window.location.href="register.html"; 
+            }
+        },
+        error:function () {
+        	alert("注册失败，请稍后重试！");
+            window.location.href="register.html";
+        }
+     });
+     });
+// 表单数据为空处理
+function empty(id,idTip){
+id.onblur=function(){
+
+	if(this.value==""){
+		idTip.style.display="block";
+		id.style.border="1px dotted red";
+	}else{
+		idTip.style.display="none";
+		id.style.border="";
+	}
+	}}
+
+function getId(id){
+	var id=document.getElementById(id);
+	return id;
+}
+
+function checkNull(){
+getId(username); getId(usernameTip);
+getId(email); getId(emailTip);
+getId(password);getId(passwordTip);
+getId(realpassword);getId(realpasswordTip);
+getId(captcha);getId(captchaTip);
+getId(samepasswordTip);
+
+empty(username,usernameTip);
+empty(email,emailTip);
+empty(password,passwordTip);
+empty(realpassword,realpasswordTip);
+empty(captcha,captchaTip);
+
+}  
+</script>
+</html>

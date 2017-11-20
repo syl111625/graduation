@@ -1,0 +1,100 @@
+
+			.iboxHeight {
+				height: 600px;
+			}
+			
+			.iboxBlue {
+				background: skyblue;
+			}
+			
+			.ibox-tools {
+				position: relative;
+			}
+			
+			.eAppearance {
+				height: 500px;
+			}
+			
+			.posrig {
+				position: absolute;
+				top: -8px;
+				height: 28px;
+				border-radius: 5px;
+			}
+			.devID{
+				right: 160px;
+			}
+			.definedID{
+				right: 465px;
+			}
+			.chooseDev {
+				right: 115px;
+			}
+			.definedDev{
+				right: 420px;
+			}
+			.definedDevS{
+				right: 270px;
+			}
+			.definedDevE{
+				right: 120px;
+			}
+			.chooseDay {
+				right: 200px;
+			}
+			
+			.addWeek {
+				right: 120px;
+				line-height: 28px;
+			}
+			
+			.check {
+				right: 50px;
+			}
+			
+			.help {
+				right: 5px;
+				line-height: 28px;
+			}
+			
+			
+			.PriceEleSty{
+				color: red;
+				margin: 40px 0 20px 160px;
+				
+			}
+			.PriceEle{
+				width: 180px;
+				height: 35px;
+				line-height: 35px;
+				margin: 0 0 40px 160px;
+			}
+			.priceSum{
+				margin: 0 0 0 185px;
+			}
+			.iboxMonthHeight{
+				height: 300px;
+			}
+			.formMonth{
+				margin-top:50px;
+			}
+			.thisMonthText{
+				color: red;
+				text-align: center;
+				margin: 30px 0 0 90px;
+			}
+			.thisMonthRMB{
+				
+				background: skyblue;
+				text-align: center;
+			}
+			.devRMB{
+				color: red;
+				text-align: center;
+				font-size: 75px;
+				width: 200px;
+				height: 200px;
+				margin: 20px 0 0 80px;
+			}
+			
+			

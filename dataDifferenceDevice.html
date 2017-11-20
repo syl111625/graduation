@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>差异电表数据统计</title>
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+
+		
+		<link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+		<link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+
+		<link href="css/animate.css" rel="stylesheet">
+		<link href="css/style.css?v=4.1.0" rel="stylesheet">
+		<link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+		<link rel="stylesheet" href="css/dataDevice.css"/>
+		
+	</head>
+	<!--数据分析/单设备数据分析-->
+	<body class="gray-bg">
+		<div class="wrapper wrapper-content animated fadeInRight">
+			<div class="row">
+				<!--周能耗分析-->
+				<div class="col-sm-12">
+					<div class="ibox iboxHeight">
+						<div class="ibox-title iboxBlue">
+							<h5>近周能耗分析</h5>
+							<div class="ibox-tools">								
+								<input class="week" type="hidden" name="condition" value="week" />
+								<button class="btn btn-info posrig check checkWeek">查询</button>
+								<button class="btn btn-warning btn-xs posrig help">帮助</button>
+							</div>
+						</div>
+						<div class="ibox-content ">
+
+							<div class="col-sm-7">
+								<div class="echarts eAppearance" id="echarts-line-chartWeek"></div>
+							</div>
+							<div class="col-sm-5">
+
+								<div class="echarts eAppearance" id="echarts-pie-chartWeek"></div>
+							</div>
+
+						</div>
+
+					</div>
+					<!--月能耗分析-->
+					<div class="ibox iboxHeight">
+						<div class="ibox-title iboxBlue">
+							<h5>近月能耗分析</h5>
+							<div class="ibox-tools">								
+								<input class="month" type="hidden" name="condition" value="month" />
+								<button class="btn btn-info posrig check checkMonth">查询</button>
+								<button class="btn btn-warning btn-xs posrig help">帮助</button>
+							</div>
+						</div>
+						<div class="ibox-content ">
+
+							<div class="col-sm-7">
+								<div class="echarts eAppearance" id="echarts-line-chartMonth"></div>
+							</div>
+							<div class="col-sm-5">
+
+								<div class="echarts eAppearance" id="echarts-pie-chartMonth"></div>
+							</div>
+
+						</div>
+
+					</div>
+					
+					<!--自定义查询能耗分析-->
+					<div class="ibox iboxHeight">
+						<div class="ibox-title iboxBlue">
+							<h5>自定义查询能耗分析</h5>
+							<div class="ibox-tools">								
+								<input placeholder="开始查询日期" type="date" class="posrig  definedDevS" >
+
+								<input placeholder="结束查询日期" type="date" class="posrig definedDevE " >
+								
+								<button class="btn btn-info posrig check checkDef">查询</button>
+								<button class="btn btn-warning btn-xs posrig help">帮助</button>
+							</div>
+						</div>
+						<div class="ibox-content ">
+
+							<div class="col-sm-12">
+								<div class="echarts eAppearance" id="echarts-line-chartDefined"></div>
+							</div>
+							
+
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+		</div>
+
+		</div>
+		<!-- 全局js -->
+
+		<script src="js/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/content.js?v=1.0.0"></script>
+		<script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+		<!-- ECharts -->
+		<script src="js/charts/echarts.min.js"></script>
+		<script src="js/demo/echartsDemoDifferenceDe.js"></script>
+		<script src="js/demo/echartsDemoDifferencePie.js"></script>
+				
+		<script src="js/url.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			//	帮助
+			$(".help").click(function help() {
+				swal("能耗差异查询", "通过选择右上角的对应查询条件\r\n\r\n查看相应的数据图表");
+			});
+
+			//近周图表更新数据
+			$(".checkWeek").click(function() {
+				//选中的电表值，日期值，周期值							
+				var week = $(".week").val();				
+				console.log(week);
+				//jQuery.support.cors = true;
+				$.ajax({
+					url: url + "data/everyDeviceData",
+					type: 'post',
+					data: {
+						condition: week
+					},
+					dataType: "json",
+					xhrFields: {
+						withCredentials: true
+					},
+					crossDomain: true,
+					success: function(data) {
+						console.log(data);
+
+						echartsLineWeek.hideLoading();
+						echartsPieWeek.hideLoading();
+						//把数据放到数组中
+						var array1 = new Array(data.length);
+						var array2 = new Array(data.length);
+						var array3 = new Array(data.length);
+						for(var i = 0; i < data.length; i++) {
+
+							array1[i] = data[i].variable1;
+							array2[i] = data[i].variable2;
+							array3[i] = data[i].variable3;
+						}
+						//近周柱状图图表更新数据
+						echartsLineWeek.setOption({
+							xAxis: {
+								data: array3
+							},
+							series: [{
+									name: '用电量',
+									type: 'bar',
+									data: array1
+								},
+								{
+									name: '功率',
+									type: 'bar',
+									data: array2
+								},
+							]
+
+						});
+
+						//近周饼图图表更新数据
+						echartsPieWeek.setOption({
+							legend: {
+								data: array3
+							},
+							series: [{
+								name: '用电量',
+								type: 'pie',
+								data: [{
+										value: array1[0],
+										name: array3[0]
+									},
+									{
+										value: array1[1],
+										name: array3[1]
+									},
+									{
+										value: array1[2],
+										name: array3[2]
+									},
+									{
+										value: array1[3],
+										name: array3[3]
+									},
+									{
+										value: array1[4],
+										name: array3[4]
+									},
+									{
+										value: array1[5],
+										name: array3[5]
+									},
+									{
+										value: array1[6],
+										name: array3[6]
+									}
+								]
+							}]
+
+						});
+
+					},
+					error: function() {
+						echartsLineWeek.hideLoading();
+						console.log('error');
+					}
+				});
+			});
+
+			//近月图表更新数据
+			$(".checkMonth").click(function() {
+				//选中的电表值，日期值，周期值							
+				var month = $(".month").val();				
+				console.log(month);
+				//jQuery.support.cors = true;
+				$.ajax({
+					url: url + "data/everyDeviceData",
+					type: 'post',
+					data: {
+						condition: month
+					},
+					dataType: "json",
+					xhrFields: {
+						withCredentials: true
+					},
+					crossDomain: true,
+					success: function(data) {
+						console.log(data);
+
+						echartsLineMonth.hideLoading();
+						//把数据放到数组中
+						var array1 = new Array(data.length);
+						var array2 = new Array(data.length);
+						var array3 = new Array(data.length);
+						for(var i = 0; i < data.length; i++) {
+
+							array1[i] = data[i].variable1;
+							array2[i] = data[i].variable2;
+							array3[i] = data[i].variable3;
+						}
+						//近月柱状图图表更新数据
+						echartsLineMonth.setOption({
+							xAxis: {
+								data: array3
+							},
+							series: [{
+									name: '用电量',
+									type: 'bar',
+									data: array1
+								},
+								{
+									name: '功率',
+									type: 'bar',
+									data: array2
+								},
+							]
+
+						});
+
+						//近月饼图图表更新数据
+						echartsPieMonth.setOption({
+							legend: {
+								data: array3
+							},
+							series: [{
+								name: '用电量',
+								type: 'pie',
+								data: [{
+										value: array1[0],
+										name: array3[0]
+									},
+									{
+										value: array1[1],
+										name: array3[1]
+									},
+									{
+										value: array1[2],
+										name: array3[2]
+									},
+									{
+										value: array1[3],
+										name: array3[3]
+									},
+									{
+										value: array1[4],
+										name: array3[4]
+									},
+									{
+										value: array1[5],
+										name: array3[5]
+									},
+									{
+										value: array1[6],
+										name: array3[6]
+									}
+								]
+							}]
+
+						});
+
+					},
+					error: function() {
+						echartsLineMonth.hideLoading();
+						console.log('error');
+					}
+				});
+			});
+
+			//自定义柱状图图表更新数据
+			$(".checkDef").click(function() {
+				//选中的电表值，日期值，周期值			
+				
+				var definedDevS = $(".definedDevS").val();
+				var definedDevE = $(".definedDevE").val();
+				
+				console.log(definedDevS + " " + definedDevE);
+				//jQuery.support.cors = true;
+				$.ajax({
+					url: url + "data/customQueryEveryDevice",
+					type: 'post',
+					data: {
+						startPoint: definedDevS,
+						endPoint: definedDevE
+					},
+					dataType: "json",
+					xhrFields: {
+						withCredentials: true
+					},
+					crossDomain: true,
+					success: function(data) {
+						console.log(data);
+
+						echartsLineDef.hideLoading();
+						//把数据放到数组中
+						var array1 = new Array(data.length);
+						var array2 = new Array(data.length);
+						var array3 = new Array(data.length);
+						for(var i = 0; i < data.length; i++) {
+
+							array1[i] = data[i].variable1;
+							array2[i] = data[i].variable2;
+							array3[i] = data[i].variable3;
+						}
+
+						echartsLineDef.setOption({
+							xAxis: {
+								data: array3
+							},
+							series: [{
+									name: '用电量',
+									type: 'bar',
+									data: array1
+								},
+								{
+									name: '功率',
+									type: 'bar',
+									data: array2
+								},
+							]
+
+						});
+
+					},
+					error: function() {
+						echartsLineDef.hideLoading();
+						console.log('error');
+					}
+				});
+			});
+		</script>
+	</body>
+
+</html>

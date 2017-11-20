@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<!--360浏览器优先以webkit内核解析-->
+
+		<title> - 主页示例</title>
+
+		<link rel="shortcut icon" href="favicon.ico">
+		<link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+		<link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+
+		<link href="css/animate.css" rel="stylesheet">
+		<link href="css/style.css?v=4.1.0" rel="stylesheet">
+		<style type="text/css">
+			.bg-warning {
+				background: orange;
+			}
+			
+			.bg-danger {
+				background: #C7254E;
+			}
+			
+			.iboxHeight {
+				height: 255px;
+			}
+			
+			.gaugeHeight {
+				height: 210px;
+			}
+			
+			.iboxBlue {
+				background: deepskyblue;
+			}
+		</style>
+	</head>
+	<!--主页与子页面的链接-->
+
+	<body class="gray-bg">
+		<div class="wrapper wrapper-content">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="row">
+						<div class="col-xs-5">
+							<div class="row row-xs ">
+								<a href="equipmentList.html" title="查看电器列表详情">
+									<div class="col-xs-6 ">
+										<div class="panel padder-v item bg-primary">
+											<i class="fa fa-fax fa-5x col-xs-1 text-left"></i>
+											<div class="h1 text-fff font-thin h1 text-center col-xs-offset-6"><span class="deviceCount">3</span>/0</div>
+											<span class="text-muted text-xs col-xs-offset-1">电器开/关数量(台)</span>
+										</div>
+									</div>
+								</a>
+								<a href="equipmentList.html" title="查看电器列表详情">
+									<div class="col-xs-6">
+										<div class="panel padder-v item bg-info">
+											<i class="fa fa-battery-three-quarters fa-5x col-xs-1 text-left"></i>
+											<div class="h1 text-fff font-thin h1 text-center col-xs-offset-6"><span class="deviceCount">3</span>/0</div>
+											<span class="text-muted text-xs col-xs-offset-1">采集器在/离线(台)</span>
+										</div>
+									</div>
+								</a>
+								<a href="maintainTask.html" title="查看维修列表详情">
+									<div class="col-xs-6">
+										<div class="panel padder-v item bg-warning">
+											<i class="fa fa-wrench fa-5x col-xs-1 text-left"></i>
+											<div class="h1 text-fff font-thin h1 text-center col-xs-offset-6"><span class="maintenanceCount">3</span></div>
+											<span class="text-muted text-xs col-xs-offset-1">维修任务</span>
+
+										</div>
+									</div>
+								</a>
+								<a href="alarmEquipmentTrouble.html" title="查看故障列表详情">
+									<div class="col-xs-6 ">
+										<div class="panel padder-v item bg-danger">
+											<i class="fa fa-exclamation-triangle fa-5x col-xs-1 text-left"></i>
+											<div class="font-thin h1 text-center col-xs-offset-6"><span class="faultDeviceCount">3</span></div>
+											<span class="text-muted text-xs col-xs-offset-1">故障电器(台)</span>
+
+										</div>
+									</div>
+								</a>
+							</div>
+						</div>
+
+						<a href="a1.html">
+							<div class="col-sm-7">
+								<div class="ibox float-e-margins iboxHeight">
+									<div class="ibox-title iboxBlue">
+										<h5>节能分析</h5>
+										<div class="ibox-tools">
+											<a href="energyConsumptionSave.html" class="btn btn-primary btn-xs">更多</a>
+										</div>
+									</div>
+									<div class="ibox-content gaugeHeight">
+										<div class="echarts" id="echarts-gauge-chart"></div>
+									</div>
+								</div>
+							</div>
+						</a>
+
+					</div>
+
+					<div class="row">
+						<div class="col-sm-5">
+							<div class="ibox float-e-margins">
+								<div class="ibox-title iboxBlue">
+									<h5>消息通知</h5>
+									<div class="ibox-tools">
+										<a href="newsLook.html" class="btn btn-primary btn-xs">更多</a>
+									</div>
+								</div>
+								<div class="" id="ibox-content">
+
+									<div id="vertical-timeline" class="vertical-container light-timeline">
+										<div class="vertical-timeline-block">
+											<div class="vertical-timeline-icon navy-bg">
+												<i class="fa fa-briefcase"></i>
+											</div>
+
+											<div class="vertical-timeline-content">
+												<h2>会议</h2>
+												<p>上一年的销售业绩发布会。总结产品营销和销售趋势及销售的现状。
+												</p>
+												<!--<a href="#" class="btn btn-sm btn-primary"> 更多信息</a>-->
+												<span class="vertical-date">
+                                    今天 <br>
+                                    <small>2月3日</small>
+                                </span>
+											</div>
+										</div>
+
+										<div class="vertical-timeline-block">
+											<div class="vertical-timeline-icon lazur-bg">
+												<i class="fa fa-coffee"></i>
+											</div>
+
+											<div class="vertical-timeline-content">
+												<h2>喝咖啡休息</h2>
+												<p>喝咖啡啦，啦啦啦~~</p>
+												<!--<a href="#" class="btn btn-sm btn-info">更多</a>-->
+												<span class="vertical-date"> 昨天 <br><small>2月2日</small></span>
+											</div>
+										</div>
+
+										<div class="vertical-timeline-block">
+											<div class="vertical-timeline-icon lazur-bg">
+												<i class="fa fa-coffee"></i>
+											</div>
+
+											<div class="vertical-timeline-content">
+												<h2>喝咖啡休息</h2>
+												<p>喝咖啡啦，啦啦啦~~</p>
+												<!--<a href="#" class="btn btn-sm btn-info">更多</a>-->
+												<span class="vertical-date"> 昨天 <br><small>2月2日</small></span>
+											</div>
+										</div>
+
+										<div class="vertical-timeline-block">
+											<div class="vertical-timeline-icon lazur-bg">
+												<i class="fa fa-user-md"></i>
+											</div>
+
+											<div class="vertical-timeline-content">
+												<h2>公司年会</h2>
+												<p>发年终奖啦，啦啦啦~~</p>
+												<span class="vertical-date">前天 <br><small>2月1日</small></span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-7">
+							<div class="ibox ">
+								<div class="ibox-title iboxBlue">
+									<h5>用电分析</h5>
+									<div class="ibox-tools">
+										<a href="chargingEnergy.html" class="btn btn-primary btn-xs">更多</a>
+									</div>
+								</div>
+								<div class="ibox-content">
+									<div class="echarts" id="echarts-radar-chart"></div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-7">
+							<div class="ibox float-e-margins">
+								<div class="ibox-title iboxBlue">
+									<h5>能源分析</h5>
+									<div class="ibox-tools">
+										<a href="dataSingleDevice.html" class="btn btn-primary btn-xs">更多</a>
+									</div>
+								</div>
+								<div class="ibox-content">
+
+									<a href="singleDevice.html" title="查看数据分析详情">
+										<div class="echarts" id="echarts-line-chart"></div>
+									</a>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<!-- 全局js -->
+		<script src="js/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<!-- charts -->
+		<script type="text/javascript" src="js/charts/echarts.min.js"></script>
+		<script src="js/plugins/echarts/echarts-all.js"></script>
+		<script src="js/demo/echartsDemoLineIndex.js"></script>
+		<script src="js/demo/echartsDemoRadar.js"></script>
+		<script src="js/demo/echartsDemoGauge.js"></script>
+		<script src="js/plugins/layer/layer.min.js"></script>
+		<!-- Flot -->
+		<!--<script src="js/plugins/flot/jquery.flot.js"></script>
+    	<script src="js/plugins/flot/jquery.flot.tooltip.min.js"></script>
+    	<script src="js/plugins/flot/jquery.flot.resize.js"></script>
+    	<script src="js/plugins/flot/jquery.flot.pie.js"></script>-->
+		<!-- 自定义js -->
+		<script src="js/content.js"></script>
+		<!--flotdemo-->
+		<script type="text/javascript">
+			var storage = window.localStorage;
+			var deviceCount = storage.getItem("deviceCount");
+			var faultDeviceCount = storage.getItem("faultDeviceCount");
+			var maintenanceCount = storage.getItem("maintenanceCount");
+			if(deviceCount == "null"){
+				deviceCount=0;
+			}
+			if(faultDeviceCount == "null"){
+				faultDeviceCount=0;
+			}
+			if(maintenanceCount == "null"){
+				maintenanceCount=0;
+			}
+			$(".deviceCount").html(deviceCount);
+			$(".faultDeviceCount").html(faultDeviceCount);
+			$(".maintenanceCount").html(maintenanceCount);
+		</script>
+	</body>
+
+</html>

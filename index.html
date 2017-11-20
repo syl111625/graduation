@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="renderer" content="webkit">
+
+		<title>物联网校园电能管理平台</title>
+
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+
+		<!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html" />
+    <![endif]-->
+
+		<link rel="shortcut icon" href="favicon.ico">
+		<link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+		<link href="css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+		<link href="css/animate.css" rel="stylesheet">
+		<link href="css/style.css?v=4.1.0" rel="stylesheet">
+		<style type="text/css">
+			.line {
+				/*display: inline-block;*/
+				width: 1px;
+				height: 10px;
+				border-right: 1px solid #CCCCCC;
+			}
+		</style>
+	</head>
+
+	<body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
+		<div id="wrapper">
+			<!--左侧导航开始-->
+			<nav class="navbar-default navbar-static-side" role="navigation">
+				<div class="nav-close"><i class="fa fa-times-circle"></i>
+				</div>
+				<div class="sidebar-collapse">
+					<ul class="nav" id="side-menu">
+						<li class="nav-header">
+							<div class="dropdown profile-element">
+								<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+									<span class="clear">
+                                    <span class="block m-t-xs" style="font-size:20px;">
+                                       
+                                        <h4 class="font-bold">物联网校园电能管理平台</h4>
+                                    </span>
+									</span>
+								</a>
+							</div>
+							<div class="logo-element">物联网校园电能管理平台
+							</div>
+						</li>
+
+						<li>
+							<a class="J_menuItem" href="indexShow.html">
+								<i class="fa fa-home"></i>
+								<span class="nav-label">主页</span>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="fa fa fa-bar-chart-o"></i>
+								<span class="nav-label">在线监测</span>
+								<span class="fa arrow"></span>
+							</a>
+							<ul class="nav nav-second-level">
+								<li>
+									<a class="J_menuItem" href="realTimeMonitor.html">实时监测</a>
+								</li>
+
+							</ul>
+						</li>
+
+						<li>
+							<a href="mailbox.html"><i class="fa fa-pie-chart"></i> <span class="nav-label">能耗分析</span><span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">
+								<li>
+									<a class="J_menuItem" href="dataSingleDevice.html">单电表能耗分析</a>
+								</li>
+								<li>
+									<a class="J_menuItem" href="dataAllDevice.html">总电表能耗分析</a>
+								</li>
+								<li>
+									<a class="J_menuItem" href="dataDifferenceDevice.html">能耗差异分析</a>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a href="mailbox.html"><i class="fa fa-dollar"></i> <span class="nav-label">计费管理</span><span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">
+								<li>
+									<a class="J_menuItem" href="chargingEnergy.html">能源计费</a>
+								</li>
+								<li>
+									<a class="J_menuItem" href="chargingSet.html">电价设置</a>
+								</li>
+							</ul>
+						</li>
+
+						<li>
+							<a href="mailbox.html"><i class="fa fa-line-chart"></i> <span class="nav-label">节能管理</span><span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">
+								<!--<li>
+									<a class="J_menuItem" href="mailbox.html">能源监测</a>
+								</li>-->
+								<li>
+									<a class="J_menuItem" href="energyConsumptionSave.html">节能策略</a>
+								</li>
+
+							</ul>
+						</li>
+						<li>
+							<a href="mailbox.html"><i class="fa fa-bell"></i> <span class="nav-label">警报管理</span><span class="label label-danger pull-right alarmNum">8</span></a>
+							<ul class="nav nav-second-level">
+								<li>
+									<a class="J_menuItem" href="alarmEquipmentTrouble.html">设备故障</a>
+								</li>
+								<li>
+									<a class="J_menuItem" href="alarmAlertPolicies.html">报警策略</a>
+								</li>
+
+							</ul>
+						</li>
+						<li>
+							<a href="#"><i class="fa fa-commenting"></i> <span class="nav-label">消息通知</span><span class="label label-warning pull-right newsNum">16</span></a>
+							<ul class="nav nav-second-level">
+								<li>
+									<a class="J_menuItem" href="newsSend.html">发布消息</a>
+								</li>
+								<li>
+									<a class="J_menuItem" href="newsLook.html">查看消息</a>
+								</li>
+
+							</ul>
+						</li>
+						<li>
+							<a href="#"><i class="fa fa-wrench"></i> <span class="nav-label">维修管理</span><span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">
+								<li>
+									<a class="J_menuItem" href="maintainTask.html">维修任务</a>
+								</li>
+								<!--<li>
+									<a class="J_menuItem" href="maintainTaskFinish.html">已维修列表</a>
+								</li>-->
+
+							</ul>
+						</li>
+						<li>
+							<a href="#"><i class="fa fa-desktop"></i> <span class="nav-label">设备管理</span><span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">
+								<li>
+									<a class="J_menuItem" href="equipmentList.html">设备列表</a>
+								</li>
+								<li>
+									<a class="J_menuItem" href="eqipAdd.html">添加设备</a>
+								</li>
+								<li>
+									<a class="J_menuItem" href="equipmentLocation.html">设备位置</a>
+								</li>
+								<!--<li>
+									<a class="J_menuItem" href="profile.html">设备开关时间管理</a>
+								</li>-->
+							</ul>
+						</li>
+						<li>
+							<a href="#">
+								<i class="fa fa fa-bar-chart-o"></i>
+								<span class="nav-label">用户管理</span>
+								<span class="fa arrow"></span>
+							</a>
+							<ul class="nav nav-second-level">
+								<li>
+									<a class="J_menuItem" href="userList.html">用户列表</a>
+								</li>
+								<!--<li>
+									<a class="J_menuItem" href="userAdd.html">添加用户</a>
+								</li>-->
+								<li>
+									<a class="J_menuItem" href="userEdit.html">用户设置</a>
+								</li>
+								<li>
+									<a class="J_menuItem" href="userPersion.html">个人中心</a>
+								</li>
+							</ul>
+						</li>
+
+					</ul>
+				</div>
+			</nav>
+			<!--左侧导航结束-->
+			<!--右侧部分开始-->
+			<div id="page-wrapper" class="gray-bg dashbard-1">
+				<div class="row border-bottom">
+					<!--右侧部分导航栏-->
+					<nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+						<div class="navbar-header">
+							<a class="navbar-minimalize minimalize-styl-2 btn btn-info " href="#"><i class="fa fa-bars"></i> </a>
+
+						</div>
+						<ul class="nav navbar-top-links navbar-right">
+							<li class="dropdown">
+								<!--动态添加用户名-->
+								<a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+									你&nbsp;好&nbsp;:&nbsp;&nbsp;<span class="badge badge-primary indexUserName">syl</span>
+								</a>
+								<ul class="dropdown-menu dropdown-messages">
+									<li class="m-t-xs">
+										<div class="dropdown-messages-box">
+
+											<div class="media-body">
+												<div class="pull-left">
+													<img alt="image" class="img-circle" src="img/username-input_4485dfc.png"> &nbsp;&nbsp;
+													<strong class="indexUserName">syl</strong>
+												</div>
+												<a href="login.html" class="pull-right">退出</a>
+												&nbsp;<span class="line pull-right"></span>&nbsp;
+												<a class="pull-right" id="setUserPersion">设置</a>
+
+											</div>
+										</div>
+									</li>
+
+								</ul>
+							</li>
+							<li class="dropdown">
+								<a class="dropdown-toggle count-info newscount" data-toggle="dropdown" href="">
+									<i class="fa fa-envelope"></i> <span class="label label-warning newsNum">16</span>
+								</a>
+
+							</li>
+							<li class="dropdown">
+								<a class="dropdown-toggle count-info alarmcount" data-toggle="dropdown" href="#">
+									<i class="fa fa-bell"></i> <span class="label label-danger alarmNum">8</span>
+								</a>
+
+							</li>
+						</ul>
+					</nav>
+				</div>
+				<!--右侧部分框架展示页面-->
+				<div class="row J_mainContent" id="content-main">
+					<iframe id="J_iframe" width="100%" height="100%" src="frameShow.html" frameborder="0" data-id="indexShow.html" seamless></iframe>
+				</div>
+			</div>
+			<!--右侧部分结束-->
+		</div>
+
+		<!-- 全局js -->
+		<script src="js/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+
+		<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+		<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+		<script src="js/plugins/layer/layer.min.js"></script>
+
+		<!-- 自定义js -->
+		<script src="js/hAdmin.js?v=4.1.0"></script>
+		<script type="text/javascript" src="js/index.js"></script>
+
+		<!-- 第三方插件 -->
+		<script src="js/plugins/pace/pace.min.js"></script>
+		<script src="js/url.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			$('#setUserPersion').click(
+				function() {
+					var src = "http://127.0.0.1:8080/graduation-electrial/userPersion.html";
+					$('#J_iframe').attr('src', src);
+				}
+			);
+
+			$('.newscount').click(
+				function() {
+					var src = "http://127.0.0.1:8080/graduation-electrial/newsLook.html";
+					$('#J_iframe').attr('src', src);
+				}
+			);
+
+			$('.alarmcount').click(
+				function() {
+					var src = "http://127.0.0.1:8080/graduation-electrial/alarmEquipmentTrouble.html";
+					$('#J_iframe').attr('src', src);
+				}
+			);
+
+			$(".userName").val(localStorage.username);
+		</script>
+		<script type="text/javascript">
+			var storage = window.localStorage;
+			//获取警报信息
+			var messageCount = storage.getItem("messageCount");
+			
+			var deviceCount = storage.getItem("deviceCount");
+			var faultDeviceCount = storage.getItem("faultDeviceCount");
+			var maintenanceCount = storage.getItem("maintenanceCount");
+			
+			//获取管理员信息
+			var id = storage.getItem("id");
+			var userName = storage.getItem("userName");
+			
+			if(messageCount == "null"){
+				
+				messageCount="";
+			}
+			console.log(userName+" "+messageCount);
+			//菜单和导航显示用户名、消息数量、警报数量
+			$(".indexUserName").html(userName);
+			$(".newsNum").html(messageCount);
+			$(".alarmNum").html(messageCount);
+			
+			//右侧页面显示维修数量、电器数量、故障数量
+			$(".deviceCount").html(deviceCount);
+			$(".faultDeviceCount").html(faultDeviceCount);
+			$(".maintenanceCount").html(maintenanceCount);
+			
+			
+			//	websocket前台页面方法
+			var websocket = null;
+
+			//  判断当前浏览器是否支持WebSocket
+			if('WebSocket' in window) {
+				//    	申请一个WebSocket对象，参数是需要连接的服务器端的地址 
+				websocket = new WebSocket(wsUrl + id);
+
+			} else {
+				alert('Not support websocket');
+			}
+
+			//  如果连接失败，发送、接收数据失败或者处理数据出现错误，浏览器会触发onerror消息;
+			websocket.onerror = function() {
+				console.log("back/index.js, websocket握手失败");
+			};
+
+			websocket.onopen = function(event) {};
+
+			//  this.send = function (message, callback) {  
+			//  this.waitForConnection(function () {  
+			//      websocket.send(message);  
+			//      if (typeof callback !== 'undefined') {  
+			//        callback();  
+			//      }  
+			//  }, 1000);  
+			//};  
+			//
+			//this.waitForConnection = function (callback, interval) {  
+			//  if (websocket.readyState === 1) {  
+			//      callback();  
+			//  } else {  
+			//      var that = this;  
+			//      // optional: implement backoff for interval here  
+			//      setTimeout(function () {  
+			//          that.waitForConnection(callback, interval);  
+			//      }, interval);  
+			//  }  
+			//};  
+			
+			if(websocket.readyState == 1) {
+				websocket.send('hello world');
+			}
+
+			//  传递消息的渠道
+			websocket.onmessage = function(event) {
+				//      setMessageInnerHTML(event.data);
+				console.log(event.data);
+			};
+
+			//  function setMessageInnerHTML(innerHTML){
+			////    	判断是否已经存在红点，若已存在则不作操作若不存在则增加红点
+			//  	if($("#redpoint").length <= 0) {
+			//	    	$("#bell").append(
+			//	    		'<div id="redpoint"></div>'
+			//	    	);
+			//  	}
+			//  	$("#getSuggestions").attr("title", "有新的消息");
+			//  } 
+
+			//  连接关闭的回调方法
+			websocket.onclose = function() {};
+
+			//  当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+			window.onbeforeunload = function() {
+				websocket.close();
+			};
+		</script>
+	</body>
+
+</html>

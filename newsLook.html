@@ -135,35 +135,48 @@ TODO 添加记录列表
 		</div>
 
 		<!-- 全局js -->
-		<script src="js/jquery.min.js?v=2.1.4"></script>
-		<script src="js/bootstrap.min.js?v=3.3.6"></script>
+		<script src="js/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
 		<script src="js/url.js" type="text/javascript"></script>
 		<script>
 			//表格拼接数据
 			//			jQuery.support.cors = true;
 			$.ajax({
-				url: url+"message/MessageController",
+				url: url+"message/allMessages",
 				type: 'get',
-				data: {},
 				dataType: "json",
 				xhrFields: {
 					withCredentials: true
 				},
 				crossDomain: true,
 				success: function(data) {
+					console.log(data);
 					var str = "";
 					for(i in data) {
+						//转换消息状态
+						if(data[i].isRead == 0) {
+							isRead = "未读";
+						} else if(data[i].isRead == 1) {
+							isRead = "已读";
+						}
 						str += "<tr>" +
-							"<td class='project-status'><span class='label label-primary'>" + data[i].state + "</span></td>" +
-							"<td class='project-title'><a>" + data[i].title + "</a><br/><p class='content'>" + data[i].content +
-							"<small>发布时间" + data[i].time + "</small></td>" +
-							"<td class='project-completion' id='people'><small>发布人：" + data[i].people + "</small></td>" +
+							"<td class='project-status'><span class='label label-primary'>" + data[i].id + "</span></td>" +
+							"<td class='project-title'><p class='content'>" + data[i].content +"</p><br/>"+
+							"<small>发布时间&nbsp;&nbsp;" + data[i].time + "</small></td>" +
+							"<td class='project-completion' id='people'><small>发布人：" +data[i].isRead + "</small></td>" +
+							"<td class='project-completion' id='people'><small>接受者：" +data[i].isRead + "</small></td>" +
+							"<td class='project-completion' id='people'><small>状态：" +isRead + "</small></td>" +
 							"<td class='project-actions'><a class='btn btn-white btn-sm '><i class='fa fa-pencil '></i> 详情</a></td>" +
 							"</tr>";
 
 					}
 					$("#newsLookJoint").html(str);
+					//获取红点是否存在，是否需要操作
+//					var newsNumOp=$(window.parent.document).find(".newsNum");
+//					console.log(newsNumOp);
 
+
+						
 				},
 				error: function() {
 					alert('error');

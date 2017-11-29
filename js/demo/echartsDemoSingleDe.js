@@ -8,7 +8,7 @@ var echartsLineWeek = echarts.init(document.getElementById("echarts-line-chartWe
             trigger: 'axis'
         },
         legend: {
-            data:['用电量','功率']
+            data:['用电量']
         },
         grid:{
             x:40,
@@ -41,32 +41,32 @@ var echartsLineWeek = echarts.init(document.getElementById("echarts-line-chartWe
                 nameTextStyle:{
                 	color:'orange'
                 }
-           },
-           {
-                type : 'value',
-                min:0,
-                max:600,
-                axisLabel:{
-                	textStyle:{
-                		color:'skyblue'
-                	}               	
-                },
-                name:'功率(w)',
-                nameTextStyle:{
-                	color:'skyblue'
-                }
            }
+//         {
+//              type : 'value',
+//              min:0,
+//              max:600,
+//              axisLabel:{
+//              	textStyle:{
+//              		color:'skyblue'
+//              	}               	
+//              },
+//              name:'功率(w)',
+//              nameTextStyle:{
+//              	color:'skyblue'
+//              }
+//         }
         ],
         series : [
             {
                 name:'用电量',
                 type:'bar',
-                data:[100,200,300,400,500,200,340],
+                data:[1000,2000,2200,2500,1500,2000,2400],
                 barWidth:25,
                 markPoint : {
                     data : [
-                        {type : 'max', name: '最大值'},
-                        {type : 'min', name: '最小值'}
+                        {type : 'max', name: '最大值',symbolSize:'60'},
+                        {type : 'min', name: '最小值',symbolSize:'60'}
                     ]
                 },
                 yAxisIndex: 0,
@@ -75,25 +75,25 @@ var echartsLineWeek = echarts.init(document.getElementById("echarts-line-chartWe
                         {type : 'average', name: '平均值'}
                     ]
                 }
-            },
-            {
-                name:'功率',
-                type:'bar',
-                data:[100,200,300,400,500,200,340],
-                barWidth:25,
-                markPoint : {
-                    data : [
-                        {type : 'max', name: '最大值'},
-                        {type : 'min', name: '最小值'}
-                    ]
-                },
-                yAxisIndex: 1,
-                markLine : {
-                    data : [
-                        {type : 'average', name: '平均值'}
-                    ]
-                }
             }
+//          {
+//              name:'功率',
+//              type:'bar',
+//              data:[100,200,300,400,500,200,340],
+//              barWidth:25,
+//              markPoint : {
+//                  data : [
+//                      {type : 'max', name: '最大值'},
+//                      {type : 'min', name: '最小值'}
+//                  ]
+//              },
+//              yAxisIndex: 1,
+//              markLine : {
+//                  data : [
+//                      {type : 'average', name: '平均值'}
+//                  ]
+//              }
+//          }
         ]
     };
     echartsLineWeek.setOption(Weekoption);
@@ -111,7 +111,7 @@ var echartsLineWeek = echarts.init(document.getElementById("echarts-line-chartWe
             trigger: 'axis'
         },
         legend: {
-            data:['用电量','功率']
+            data:['用电量']
         },
         grid:{
             x:40,
@@ -144,21 +144,21 @@ var echartsLineWeek = echarts.init(document.getElementById("echarts-line-chartWe
                 nameTextStyle:{
                 	color:'orange'
                 }
-           },
-           {
-                type : 'value',
-                min:0,
-                max:5000,
-                axisLabel:{
-                	textStyle:{
-                		color:'skyblue'
-                	}               	
-                },
-                name:'功率(w)',
-                nameTextStyle:{
-                	color:'skyblue'
-                }
            }
+//         {
+//              type : 'value',
+//              min:0,
+//              max:5000,
+//              axisLabel:{
+//              	textStyle:{
+//              		color:'skyblue'
+//              	}               	
+//              },
+//              name:'功率(w)',
+//              nameTextStyle:{
+//              	color:'skyblue'
+//              }
+//         }
         ],
         series : [
             {
@@ -168,8 +168,8 @@ var echartsLineWeek = echarts.init(document.getElementById("echarts-line-chartWe
                 barWidth:25,
                 markPoint : {
                     data : [
-                        {type : 'max', name: '最大值'},
-                        {type : 'min', name: '最小值'}
+                        {type : 'max', name: '最大值',symbolSize:'60'},
+                        {type : 'min', name: '最小值',symbolSize:'60'}
                     ]
                 },
                 yAxisIndex: 0,
@@ -178,25 +178,25 @@ var echartsLineWeek = echarts.init(document.getElementById("echarts-line-chartWe
                         {type : 'average', name: '平均值'}
                     ]
                 }
-            },
-            {
-                name:'功率',
-                type:'bar',
-                data:[1000,4200,1500, 1200],
-                barWidth:25,
-                markPoint : {
-                    data : [
-                        {type : 'max', name: '最大值'},
-                        {type : 'min', name: '最小值'}
-                    ]
-                },
-                yAxisIndex: 1,
-                markLine : {
-                    data : [
-                        {type : 'average', name: '平均值'}
-                    ]
-                }
             }
+//          {
+//              name:'功率',
+//              type:'bar',
+//              data:[1000,4200,1500, 1200],
+//              barWidth:25,
+//              markPoint : {
+//                  data : [
+//                      {type : 'max', name: '最大值'},
+//                      {type : 'min', name: '最小值'}
+//                  ]
+//              },
+//              yAxisIndex: 1,
+//              markLine : {
+//                  data : [
+//                      {type : 'average', name: '平均值'}
+//                  ]
+//              }
+//          }
         ]
     };
     echartsLineMonth.setOption(Monthoption);
@@ -319,7 +319,7 @@ var echartsLineDef = echarts.init(document.getElementById("echarts-line-chartDef
             trigger: 'axis'
         },
         legend: {
-            data:['用电量','功率']
+            data:['用电量']
         },
         grid:{
             x:40,
@@ -352,21 +352,21 @@ var echartsLineDef = echarts.init(document.getElementById("echarts-line-chartDef
                 nameTextStyle:{
                 	color:'orange'
                 }
-           },
-           {
-                type : 'value',
-                min:0,
-                max:1000,
-                axisLabel:{
-                	textStyle:{
-                		color:'skyblue'
-                	}               	
-                },
-                name:'功率(w)',
-                nameTextStyle:{
-                	color:'skyblue'
-                }
            }
+//         {
+//              type : 'value',
+//              min:0,
+//              max:1000,
+//              axisLabel:{
+//              	textStyle:{
+//              		color:'skyblue'
+//              	}               	
+//              },
+//              name:'功率(w)',
+//              nameTextStyle:{
+//              	color:'skyblue'
+//              }
+//         }
         ],
         series : [
             {
@@ -375,9 +375,10 @@ var echartsLineDef = echarts.init(document.getElementById("echarts-line-chartDef
                 data:[400,520,250, 720,250, 320],
                 barWidth:25,
                 markPoint : {
+                	
                     data : [
-                        {type : 'max', name: '最大值'},
-                        {type : 'min', name: '最小值'}
+                        {type : 'max', name: '最大值',symbolSize:'60'},
+                        {type : 'min', name: '最小值',symbolSize:'60'}
                     ]
                 },
                 yAxisIndex: 0,
@@ -386,25 +387,25 @@ var echartsLineDef = echarts.init(document.getElementById("echarts-line-chartDef
                         {type : 'average', name: '平均值'}
                     ]
                 }
-            },
-            {
-                name:'功率',
-                type:'bar',
-                data:[830,220,650, 460,250,770],
-                barWidth:25,
-                markPoint : {
-                    data : [
-                        {type : 'max', name: '最大值'},
-                        {type : 'min', name: '最小值'}
-                    ]
-                },
-                yAxisIndex: 1,
-                markLine : {
-                    data : [
-                        {type : 'average', name: '平均值'}
-                    ]
-                }
             }
+//          {
+//              name:'功率',
+//              type:'bar',
+//              data:[830,220,650, 460,250,770],
+//              barWidth:25,
+//              markPoint : {
+//                  data : [
+//                      {type : 'max', name: '最大值'},
+//                      {type : 'min', name: '最小值'}
+//                  ]
+//              },
+//              yAxisIndex: 1,
+//              markLine : {
+//                  data : [
+//                      {type : 'average', name: '平均值'}
+//                  ]
+//              }
+//          }
         ]
     };
     echartsLineDef.setOption(Defoption);

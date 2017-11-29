@@ -61,6 +61,7 @@
 								<tr>
 									<th>id</th>
 									<th>姓名</th>
+									<th>电话</th>
 									<!--<th>密码</th>-->
 									<th>邮箱</th>
 									<th>角色</th>
@@ -71,7 +72,16 @@
 								</tr>
 							</thead>
 							<tbody id="useList">
-
+									<tr>
+										<td>1</td>
+										<td>syl</td>
+										<td>18813719786</td>
+										<td>2515412900@qq.com</td>
+										<td>管理员</td>
+										<td>启用</td>
+										<td>2017-11-09 09:21:00</td>
+										<td>2017-11-09 09:21:00</td>
+									</tr>
 							</tbody>
 						</table>
 					</div>
@@ -190,10 +200,12 @@
 						//保存当前用户信息
 						var storage = window.localStorage;
 						//获取管理员信息			
-						var editName = storage.getItem("userName");
-						if(editName == data[i].name){
+						var userName = storage.getItem("userName");
+						console.log(userName);
+						if(userName == data[i].name){
 							storage.setItem("id",data[i].id);
 							storage.setItem("name",data[i].name);
+							storage.setItem("phone",data[i].phone);
 							storage.setItem("email",data[i].email);
 							storage.setItem("password",data[i].password);
 							storage.setItem("isUse",data[i].isUse);
@@ -218,6 +230,7 @@
 						str += "<tr>" +
 							"<td>" + data[i].id + "</td>" +
 							"<td>" + data[i].name + "</td>" +
+							"<td>" + data[i].phone + "</td>" +
 //							"<td>" + data[i].password + "</td>" +
 							"<td>" + data[i].email + "</td>" +
 							"<td>" + role + "</td>" +
@@ -234,7 +247,7 @@
 
 						var i = $(".updateUserModal").index(this);
 
-						console.log(i);
+						console.log("updateUserModal index"+i);
 
 						//转换用户类型和使用状态
 						if(data[i].role == "admin") {
@@ -261,7 +274,7 @@
 					//删除用户
 					$(".deleteUser").click(function() {						
 						var i = $(".deleteUser").index(this);
-						console.log(data[i].id);
+						console.log("deleteUser id"+data[i].id);
 						//jQuery.support.cors = true;
 						$.ajax({
 							url: url + "user/removeUser",

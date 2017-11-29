@@ -7,52 +7,12 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
 		<link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
-		<!--<link href="css/plugins/iCheck/custom.css" rel="stylesheet">-->
+		<link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
 		<link href="css/animate.css" rel="stylesheet">
 		<link href="css/style.css?v=4.1.0" rel="stylesheet">
 		<style>
-			/*#form {
-			margin: 80px 0px;
-		}*/
-			/*label {
-			white-space: nowrap;
-		}*/
-			
-			.list-group ul li:hover {
-				cursor: text;
-				!important;
-			}
-			
-			.list-group ul li span:hover {
-				cursor: pointer;
-				!important;
-			}
-			
-			textarea {
-				padding: 0;
-				margin: 0;
-				max-height: 10em;
-				resize: vertical;
-			}
-			
-			input[class~="layer-date"] {
-				max-width: 240px;
-			}
-			
-			select[title="area-item"] {
-				padding: 0 8px !important;
-				line-height: 30px !important;
-				border: 1px solid #cfdadd !important;
-				color: #999;
-			}
-			
-			[title="area-item"] option {
-				color: black;
-			}
-			
-			#hint {
-				margin-left: 40px;
-				margin-top: 20px;
+			.controlSize {
+				height: 32px;
 			}
 		</style>
 		<title>制定巡检计划</title>
@@ -80,49 +40,45 @@
 							<p class="control-label h4 m-b-md">发布消息</p>
 
 							<form id="newsForm" class="form-horizontal">
-								<div class="form-group">
-									<label class="col-sm-2 control-label">消息标题：</label>
+								<!--<div class="form-group">
+									<label class="col-sm-2 control-label">id：</label>
 									<div class="col-sm-10">
-										<input type="text" placeholder="请输入计划标题" class="form-control">
+										<input name="id" id="id" class="form-control" >
 									</div>
-								</div>
+								</div>-->
 								<div class="form-group">
-									<label class="col-sm-2 control-label">消息内容：</label>
+									<label class="col-sm-2 control-label">故障描述：</label>
 									<div class="col-sm-10">
-										<input type="text" placeholder="请输入计划内容" class="form-control">
+										<textarea name="msg" id="msg" class="form-control" placeholder="不超过100字"></textarea>
 									</div>
 								</div>
 
-								<div class="form-group">
-									<label class="col-sm-2 control-label">发布人：</label>
-									<div class="col-sm-10">
-										<input type="text" placeholder="请输入执行人" class="form-control">
-									</div>
-								</div>
+								
 								<div class="form-group">
 									<label class="col-sm-2 control-label">维修人：</label>
 									<div class="col-sm-10">
-										<input type="text" placeholder="请输入维修人" class="form-control">
+									<!--<select id="maintainMen" name="maintenanceMan" class="form-control controlSize">
+											<option value="">li</option>
+											
+									</select>-->
+									<input name="maintenanceMan" id="maintenanceMan" class="form-control" >
 									</div>
 								</div>
 								<div class="form-group">
-									<!--<input type="text" placeholder="请输入备注" class="form-control">-->
-									<label class="col-sm-2 control-label">备注：</label>
+									<label class="col-sm-2 control-label">电话：</label>
 									<div class="col-sm-10">
-										<textarea class="form-control" name="marks" wrap="virtual" maxlength="100" placeholder="不超过100字"></textarea>
+									<input name="phone"id="phone"  placeholder="请填入手机号" class="form-control" >
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-sm-2 control-label">发布时间：</label>
+									<label class="col-sm-2 control-label">时间：</label>
 									<div class="col-sm-10">
-										<input placeholder="开始日期" class="form-control " id="start">
+										<input name="time" id="time" placeholder="开始日期" class="form-control" >
 									</div>
 								</div>
 
 								<div class="row form-group">
-									<!--<div class="col-sm-2">
-								<button class="btn btn-primary full-width table-bordered" type="button">保存计划</button>
-							</div>-->
+									
 									<div class="col-sm-2 col-sm-offset-2">
 										<button id="sendNews" class="btn btn-info full-width" type="button">立即发布</button>
 									</div>
@@ -152,66 +108,70 @@
 				<script src="js/bootstrap.min.js"></script>
 				<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 				<script src="js/url.js" type="text/javascript"></script>
-				<!--<script src="js/plugins/layer/laydate/laydate.js"></script>-->
-				<!-- iCheck -->
-				<!--<script src="js/plugins/iCheck/icheck.min.js"></script>-->
-				<!--<script>
-			
-					$('.fa-question').parent('span').on('click', function() {
-						console.log(this);
-						$('#modal').modal('show');
-					});
-					$(function() {
-						$('.full-height-scroll').slimScroll({
-							height: '100%'
-						});
-					});
-					//日期范围限制
-					var start = {
-						elem: '#start',
-						format: 'YYYY/MM/DD hh:mm:ss',
-						min: laydate.now(), //设定最小日期为当前日期
-						max: '2099-06-16 23:59:59', //最大日期
-						istime: true,
-						istoday: false,
-						choose: function(datas) {
-							end.min = datas; //开始日选好后，重置结束日的最小日期
-							end.start = datas; //将结束日的初始值设定为开始日
-						}
-					};
-					var end = {
-						elem: '#end',
-						format: 'YYYY/MM/DD hh:mm:ss',
-						min: laydate.now(),
-						max: '2099-06-16 23:59:59',
-						istime: true,
-						istoday: false,
-						choose: function(datas) {
-							start.max = datas; //结束日选好后，重置开始日的最大日期
-						}
-					};
-					laydate(start);
-					laydate(end);
-				</script>-->
+				<script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+				
+				
 
 				<script type="text/javascript">
-					var url="http://192.168.3.14:8080/";
+					
+					//把警报信息填入
 					var storage = window.localStorage;	
-					var id = storage.getItem("id");
+					var alarmId = storage.getItem("alarmId");
+					var alarmMsg = storage.getItem("alarmMsg");
+					var alarmTime = storage.getItem("alarmTime");
+					
+//					var phone = storage.getItem("phone");
+					//维修人信息
+					var maintainMen = storage.getItem("maintenanceMans");
+//					var maintainMenL=maintainMen.split(",");
+//					var men="";
+//					for (var i=0;i<maintainMenL.length;i++) {
+//						men+="<option>"+maintainMenL[i]+"</option>";
+//					}
+//					$("#maintainMen").html(men);
+					var maintainMenL=maintainMen.split("-");
+					$("#maintenanceMan").val(maintainMenL[0]);
+					
+					$("#id").val(alarmId);
+					$("#msg").val(alarmMsg);
+					$("#phone").val(maintainMenL[1]);
+					$("#time").val(alarmTime);
+					
+					console.log("alarm"+alarmId+" "+alarmMsg+" "+maintainMenL[0]+" "+alarmTime);
 					//提交维修消息表单
 					$("#sendNews").click(function(){
 						//jQuery.support.cors = true;
 					$.ajax({
-						url:url+ "message/pushMessage",
-						type: 'get',
+						url:url+ "message/assignTask",
+						type: 'post',
 						data: $("#newsForm").serialize(),
-//						dataType: "json",
+						dataType: "text",
 						xhrFields: {
 							withCredentials: true
 						},
 						crossDomain: true,
 						success: function(data) {
 							console.log(data);
+							swal({
+								title: "发布成功！",
+								type: "success",
+								showCancelButton: false,
+								confirmButtonColor: "#44BB44",
+								confirmButtonText: "确定",
+								closeOnConfirm: true,
+							},function(){
+								window.location.href="newsLook.html";
+							});
+							
+							
+							
+							//警报数量减少
+//							var faultCount = storage.getItem("faultCount");
+//							console.log(faultCount);
+//							faultCount-=1;
+////							console.log(faultCount);
+//							storage.setItem("faultCount",faultCount);
+//							window.location.href="frameShow.html";
 						},
 						error: function() {
 							alert('error');

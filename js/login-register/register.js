@@ -10,6 +10,7 @@ getId(username); getId(usernameTip);
 getId(email); getId(emailTip);
 getId(password);getId(passwordTip);
 getId(realpassword);getId(realpasswordTip);
+getId(phone);getId(phoneTip);
 getId(captcha);getId(captchaTip);
 getId(samepasswordTip);
 
@@ -107,6 +108,29 @@ var realpassword=document.getElementById("realpassword");
 		realpassword.style.border="";
 	}
 }
+//手机号校验
+phone.onblur=function phone(){
+	var phone=document.getElementById("phone");
+	var temp=/^1[3|4|5|8][0-9]\d{4,8}$/;
+	if(this.value==""){
+	
+		phoneTip.style.display="block";
+//		password.focus();
+		phone.style.border="1px solid #00DDDD";
+	}
+	else if(!temp.test(this.value)){
+		phoneTip.innerHTML="手机号格式不正确";
+//		username.focus();
+		phoneTip.style.display="block";
+		phone.style.border="1px solid #00DDDD";
+	}
+	else if(temp.test(this.value)){
+		writeTures[4].style.display="block";
+		phoneTip.style.display="none";
+		phone.style.border="";
+	}
+}
+	
 //验证码校验
 captcha.onblur=function captcha(){
 	var captcha=document.getElementById("captcha");
@@ -149,5 +173,5 @@ empty(realpassword);empty(realpasswordTip);
 empty(captcha);empty(captchaTip);
 
 }*/
-}
 
+}

@@ -5,12 +5,13 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="renderer" content="webkit">
-
+		
 		<title>物联网校园电能管理平台</title>
 
 		<meta name="keywords" content="">
 		<meta name="description" content="">
-
+		<!--兼容IE8-->
+		<!--<meta http-equiv="X-UA-Compatible" content="IE=8"/>-->
 		<!--[if lt IE 9]>
     <meta http-equiv="refresh" content="0;ie.html" />
     <![endif]-->
@@ -27,13 +28,29 @@
 				height: 10px;
 				border-right: 1px solid #CCCCCC;
 			}
+			.newscount,.alarmcount{
+				position: relative;
+			}
+			.newsNum,.alarmNum{
+				position: absolute;
+				display: inline-block;
+				width: 8px;
+				height: 8px;
+				border-radius: 50%;
+				background: red;
+				right:6px;
+				top: 12px;
+			}
+			/*.adminNav{
+				background: skyblue;
+			}*/
 		</style>
 	</head>
 
 	<body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
 		<div id="wrapper">
 			<!--左侧导航开始-->
-			<nav class="navbar-default navbar-static-side" role="navigation">
+			<nav class="navbar-default navbar-static-side adminNav" role="navigation">
 				<div class="nav-close"><i class="fa fa-times-circle"></i>
 				</div>
 				<div class="sidebar-collapse">
@@ -74,16 +91,16 @@
 						</li>
 
 						<li>
-							<a href="mailbox.html"><i class="fa fa-pie-chart"></i> <span class="nav-label">能耗分析</span><span class="fa arrow"></span></a>
+							<a href="mailbox.html"><i class="fa fa-pie-chart"></i> <span class="nav-label">能耗统计</span><span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
 								<li>
-									<a class="J_menuItem" href="dataSingleDevice.html">单电表能耗分析</a>
+									<a class="J_menuItem" href="dataSingleDevice.html">单电表能耗统计</a>
 								</li>
 								<li>
-									<a class="J_menuItem" href="dataAllDevice.html">总电表能耗分析</a>
+									<a class="J_menuItem" href="dataAllDevice.html">总电表能耗统计</a>
 								</li>
 								<li>
-									<a class="J_menuItem" href="dataDifferenceDevice.html">能耗差异分析</a>
+									<a class="J_menuItem" href="dataDifferenceDevice.html">能耗差异统计</a>
 								</li>
 							</ul>
 						</li>
@@ -93,38 +110,27 @@
 								<li>
 									<a class="J_menuItem" href="chargingEnergy.html">能源计费</a>
 								</li>
-								<li>
-									<a class="J_menuItem" href="chargingSet.html">电价设置</a>
-								</li>
-							</ul>
-						</li>
-
-						<li>
-							<a href="mailbox.html"><i class="fa fa-line-chart"></i> <span class="nav-label">节能管理</span><span class="fa arrow"></span></a>
-							<ul class="nav nav-second-level">
 								<!--<li>
-									<a class="J_menuItem" href="mailbox.html">能源监测</a>
+									<a class="J_menuItem" href="chargingSet.html">电价设置</a>
 								</li>-->
-								<li>
-									<a class="J_menuItem" href="energyConsumptionSave.html">节能策略</a>
-								</li>
-
 							</ul>
 						</li>
+
+						
 						<li>
-							<a href="mailbox.html"><i class="fa fa-bell"></i> <span class="nav-label">警报管理</span><span class="label label-danger pull-right alarmNum">8</span></a>
+							<a href="mailbox.html"><i class="fa fa-bell"></i> <span class="nav-label">警报管理</span><span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
 								<li>
 									<a class="J_menuItem" href="alarmEquipmentTrouble.html">设备故障</a>
 								</li>
-								<li>
+								<!--<li>
 									<a class="J_menuItem" href="alarmAlertPolicies.html">报警策略</a>
-								</li>
+								</li>-->
 
 							</ul>
 						</li>
 						<li>
-							<a href="#"><i class="fa fa-commenting"></i> <span class="nav-label">消息通知</span><span class="label label-warning pull-right newsNum">16</span></a>
+							<a href="#"><i class="fa fa-commenting"></i> <span class="nav-label">消息通知</span><span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
 								<li>
 									<a class="J_menuItem" href="newsSend.html">发布消息</a>
@@ -148,6 +154,18 @@
 							</ul>
 						</li>
 						<li>
+							<a href="mailbox.html"><i class="fa fa-line-chart"></i> <span class="nav-label">节能管理</span><span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">
+								<!--<li>
+									<a class="J_menuItem" href="mailbox.html">能源监测</a>
+								</li>-->
+								<li>
+									<a class="J_menuItem" href="energyConsumptionSave.html">节能策略</a>
+								</li>
+
+							</ul>
+						</li>
+						<li>
 							<a href="#"><i class="fa fa-desktop"></i> <span class="nav-label">设备管理</span><span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
 								<li>
@@ -166,7 +184,7 @@
 						</li>
 						<li>
 							<a href="#">
-								<i class="fa fa fa-bar-chart-o"></i>
+								<i class="glyphicon glyphicon-user"></i>
 								<span class="nav-label">用户管理</span>
 								<span class="fa arrow"></span>
 							</a>
@@ -226,13 +244,13 @@
 							</li>
 							<li class="dropdown">
 								<a class="dropdown-toggle count-info newscount" data-toggle="dropdown" href="">
-									<i class="fa fa-envelope"></i> <span class="label label-warning newsNum">16</span>
+									<i class="fa fa-envelope"></i> <span class="newsNum"></span>
 								</a>
 
 							</li>
 							<li class="dropdown">
 								<a class="dropdown-toggle count-info alarmcount" data-toggle="dropdown" href="#">
-									<i class="fa fa-bell"></i> <span class="label label-danger alarmNum">8</span>
+									<i class="fa fa-bell"></i> <span class="alarmNum"></span>
 								</a>
 
 							</li>
@@ -274,6 +292,7 @@
 				function() {
 					var src = "http://127.0.0.1:8080/graduation-electrial/newsLook.html";
 					$('#J_iframe').attr('src', src);
+					$(".newsNum").hide();
 				}
 			);
 
@@ -290,7 +309,8 @@
 			var storage = window.localStorage;
 			//获取警报信息
 			var messageCount = storage.getItem("messageCount");
-			
+			var faultCount = storage.getItem("faultCount");
+			console.log("登录页面  messageCount:"+messageCount+"faultCount:"+faultCount);
 			var deviceCount = storage.getItem("deviceCount");
 			var faultDeviceCount = storage.getItem("faultDeviceCount");
 			var maintenanceCount = storage.getItem("maintenanceCount");
@@ -303,11 +323,42 @@
 				
 				messageCount="";
 			}
-			console.log(userName+" "+messageCount);
+			if(faultCount == "null"){
+				
+				faultCount="";
+			}
+			console.log("登录页面 userName"+userName);
 			//菜单和导航显示用户名、消息数量、警报数量
 			$(".indexUserName").html(userName);
-			$(".newsNum").html(messageCount);
-			$(".alarmNum").html(messageCount);
+			//信息红点显示隐藏
+			if(messageCount > 0){
+				$(".newsNum").show();
+				$(".newscount").attr('title',"你有新的消息需要查看");
+			}else{
+				$(".newsNum").hide();
+			}
+//			//警报红点显示隐藏
+			if(faultCount > 0){
+				$(".alarmNum").show();
+				$(".alarmcount").attr('title',"你有新的警报需要处理");
+			}else{
+				$(".alarmNum").hide();
+			}
+			
+//			$(".newsNum").html(messageCount);
+//			$(".alarmNum").html(faultCount);
+			
+			//发布消息后警报数量减少
+//			var lastPage="http://127.0.0.1:8080/graduation-electrial/newsSend.html";
+//			if(document.referrer==lastPage){
+//				var faultCount = storage.getItem("faultCount");
+//				console.log(faultCount);
+//				if(faultCount == "null"){
+//				faultCount="";
+//				}
+//				$(".alarmNum").html(faultCount);
+//			}
+			
 			
 			//右侧页面显示维修数量、电器数量、故障数量
 			$(".deviceCount").html(deviceCount);
@@ -322,6 +373,7 @@
 			if('WebSocket' in window) {
 				//    	申请一个WebSocket对象，参数是需要连接的服务器端的地址 
 				websocket = new WebSocket(wsUrl + id);
+				console.log("连接id:"+id);
 
 			} else {
 				alert('Not support websocket');
@@ -363,6 +415,34 @@
 			websocket.onmessage = function(event) {
 				//      setMessageInnerHTML(event.data);
 				console.log(event.data);
+				var data=event.data;
+				
+				var faultCount=data.split("|")[0];
+				var messageCount=data.split("|")[1];
+				if(messageCount == "null"){
+				
+				messageCount="";
+			}
+			if(faultCount == "null"){
+				
+				faultCount="";
+			}
+			console.log("websocket messageCount:"+messageCount+"faultCount:"+faultCount);
+			
+			//信息,警报红点显示隐藏
+			if(messageCount > 0){
+				$(".newsNum").show();
+				$(".newscount").attr('title',"你有新的消息需要查看");
+			}else if(messageCount == 0){
+				$(".newsNum").hide();
+			}
+//			//警报红点显示隐藏
+			if(faultCount > 0){
+				$(".alarmNum").show();
+				$(".alarmcount").attr('title',"你有新的警报需要处理");
+			}else if(faultCount == 0){
+				$(".alarmNum").hide();
+			}
 			};
 
 			//  function setMessageInnerHTML(innerHTML){

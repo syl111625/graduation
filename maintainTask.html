@@ -60,20 +60,18 @@
 									<tr>
 										<th>id</th>
 										<th>设备id</th>
-										<th>编号</th>
-										<th>地址</th>
-										<th>故障原因</th>
-										<th>报警时间</th>
 										<th>维修人</th>
-										<th>状态</th>
-										<th>操作</th>
+										<th>手机号</th>
+										<th>故障原因</th>
+										<th>反馈意见</th>
+										<th>时间</th>
+										
 									</tr>
 								</thead>
 								<tbody id="maintainTask">
 									<tr>
 										<td>1</td>
-										<td>1</td>
-										<td>1</td>
+										
 										<td>1</td>
 										<td>1</td>
 										<td>2017/6/10</td>
@@ -110,7 +108,7 @@
 			//表格拼接数据
 //			jQuery.support.cors = true;
 			$.ajax({
-				url: url+"maintenance/MaintenanceController",
+				url: url+"maintenance/allRecords",
 				type: 'get',
 //				data: {},
 				dataType: "json",
@@ -119,12 +117,28 @@
 				},
 				crossDomain: true,
 				success: function(data) {
+					console.log(data);
+					
 					var str = "";
+					
 					for(i in data) {
+						
+						//转换反馈
+						var feedback = data[i].feedback;
+//						console.log(typeof feedback);
+						if(feedback == null) {
+							
+							feedback = "暂无反馈";
+						} 
 						str += "<tr>" +
-							"<td>" + data[i].hotel_seq + "</td>" +
-							"<td>" + data[i].hotel_name + "</td>" +
-							"<td><button class='btn btn-info'>完成</button><button class='btn btn-info'>删除</button></td>" +
+							"<td>" + data[i].id+ "</td>" +
+							"<td>" + data[i].deviceId + "</td>" +
+							"<td>" + data[i].maintenanceMan + "</td>" +
+							"<td>" + data[i].phone + "</td>" +
+							"<td>" + data[i].msg + "</td>" +
+							"<td>" + feedback + "</td>" +
+							"<td>" + data[i].time + "</td>" +
+//							"<td><button class='btn btn-info'>完成</button><button class='btn btn-info'>删除</button></td>" +
 							"</tr>";
 					}
 					$("#maintainTask").html(str);

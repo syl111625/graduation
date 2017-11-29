@@ -71,12 +71,12 @@
 					</div>
 					
 					<!--自定义查询能耗分析-->
-					<div class="ibox iboxHeight">
+					<!--<div class="ibox iboxHeight">
 						<div class="ibox-title iboxBlue">
 							<h5>自定义查询能耗分析</h5>
 							<div class="ibox-tools">								
-								<input placeholder="开始查询日期" type="date" class="posrig  definedDevS" >
-								<input placeholder="结束查询日期" type="date" class="posrig definedDevE " >
+								<input placeholder="开始查询日期"  class="posrig  definedDevS" id="start">
+								<input placeholder="结束查询日期"  class="posrig definedDevE " id="end">
 								
 								<button class="btn btn-info posrig check checkDef">查询</button>
 								<button class="btn btn-warning btn-xs posrig help">帮助</button>
@@ -89,7 +89,7 @@
 							</div>							
 						</div>
 
-					</div>
+					</div>-->
 
 				</div>
 			</div>
@@ -102,7 +102,8 @@
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/content.js?v=1.0.0"></script>
 		<script src="js/plugins/sweetalert/sweetalert.min.js"></script>
-		
+		<script src="js/plugins/layer/laydate/laydate.js"></script>
+		<!--<script src="js/laydatedef.js"></script>-->
 		<!-- ECharts -->
 		<script src="js/charts/echarts.min.js"></script>		
 		<script src="js/demo/echartsDemoAllDe.js"></script>
@@ -119,7 +120,7 @@
 			$(".checkWeek").click(function() {
 				//选中的电表值，日期值，周期值							
 				var week = $(".week").val();				
-				console.log(week);				
+				console.log("近周总设备 week:"+week);				
 				echartsLineWeek.showLoading();
 				echartsPieWeek.showLoading();
 				$.ajax({
@@ -148,21 +149,28 @@
 							array2[i] = data[i].variable2;
 							array3[i] = data[i].variable3;
 						}
+						var Max=Math.max.apply( Math, array1 )+20;
+						console.log("dataSingleDevice:"+Max);
 						//近周柱状图图表更新数据
 						echartsLineWeek.setOption({
 							xAxis: {
 								data: array3
 							},
+							yAxis: {
+								max: Max
+							},
 							series: [{
 									name: '用电量',
 									type: 'bar',
-									data: array1
-								},
-								{
-									name: '功率',
-									type: 'bar',
-									data: array2
-								},
+									data: array1,
+									markPoint : {
+                	
+                    data : [
+                        {type : 'max', name: '最大值',symbolSize:'60'},
+                        {type : 'min', name: '最小值',symbolSize:'60'}
+                    ]
+                }
+								}
 							]
 
 						});
@@ -220,7 +228,7 @@
 			$(".checkMonth").click(function() {
 				//选中的电表值，日期值，周期值							
 				var month = $(".month").val();			
-				console.log(month);				
+				console.log("近月总设备 month:"+month);				
 				echartsLineMonth.showLoading();
 				echartsPieMonth.showLoading();
 				$.ajax({
@@ -249,21 +257,28 @@
 							array2[i] = data[i].variable2;
 							array3[i] = data[i].variable3;
 						}
+						var Max=Math.max.apply( Math, array1 )+20;
+						console.log(Max);
 						//近月柱状图图表更新数据
 						echartsLineMonth.setOption({
 							xAxis: {
 								data: array3
 							},
+							yAxis: {
+								max: Max
+							},
 							series: [{
 									name: '用电量',
 									type: 'bar',
-									data: array1
-								},
-								{
-									name: '功率',
-									type: 'bar',
-									data: array2
-								},
+									data: array1,
+									markPoint : {
+                	
+                    data : [
+                        {type : 'max', name: '最大值',symbolSize:'60'},
+                        {type : 'min', name: '最小值',symbolSize:'60'}
+                    ]
+                }
+								}
 							]
 
 						});
@@ -321,16 +336,28 @@
 			$(".checkDef").click(function() {
 				//选中的电表值，开始和结束日期值							
 				var definedDevS = $(".definedDevS").val();
-				var definedDevE = $(".definedDevE").val();				
-				console.log(definedDevS + " " + definedDevE);
+				var definedDevE = $(".definedDevE").val();	
+				
+				//2017/11/23转换为2017-11-23
+				var definedDevSArray=definedDevS.split(" ");
+				var SArray=definedDevSArray[0].split("/");
+				var startArray=SArray[0]+"-"+SArray[1]+"-"+SArray[2];
+				var definedDevStart=startArray+" "+definedDevSArray[1];
+				
+				
+				var definedDevEArray=definedDevE.split(" ");
+				var EArray=definedDevEArray[0].split("/");
+				var endArray=EArray[0]+"-"+EArray[1]+"-"+EArray[2];
+				var definedDevEnd=endArray+" "+definedDevEArray[1];
+				console.log("自定义总设备 definedDevStart:"+definedDevStart + "definedDevEnd:" + definedDevEnd);
 				//			jQuery.support.cors = true;
 				echartsLineDef.showLoading();
 				$.ajax({
 					url: url + "data/customQueryManyDevices",
 					type: 'post',
 					data: {
-						startPoint: definedDevS,
-						endPoint: definedDevE
+						startPoint: definedDevStart,
+						endPoint: definedDevEnd
 					},
 					dataType: "json",
 					xhrFields: {
@@ -351,21 +378,27 @@
 							array2[i] = data[i].variable2;
 							array3[i] = data[i].variable3;
 						}
-
+						var Max=Math.max.apply( Math, array1 )+20;
+						console.log(Max);
 						echartsLineDef.setOption({
 							xAxis: {
 								data: array3
 							},
+							yAxis: {
+								max: Max
+							},
 							series: [{
 									name: '用电量',
 									type: 'bar',
-									data: array1
-								},
-								{
-									name: '功率',
-									type: 'bar',
-									data: array2
-								},
+									data: array1,
+									markPoint : {
+                	
+                    data : [
+                        {type : 'max', name: '最大值',symbolSize:'60'},
+                        {type : 'min', name: '最小值',symbolSize:'60'}
+                    ]
+                }
+								}
 							]
 
 						});

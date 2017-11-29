@@ -92,6 +92,9 @@
 		<script src="js/plugins/sweetalert/sweetalert.min.js"></script>
 		<script type="text/javascript">
 			
+				
+				
+				
 			//	帮助
 			$(".help").click(function help() {
 				swal("单电表能耗查询", "通过选择右上角的对应查询条件\r\n\r\n查看相应的数据图表");
@@ -100,7 +103,7 @@
 			//根据设备数量设置设备下拉框
 			var storage = window.localStorage;
 			var deviceCount = storage.getItem("deviceCount");
-			console.log("设备号个数"+deviceCount);
+			console.log(deviceCount);
 			//选择电表列表
 			var Kwhlist = "";			
 			for(var i = 1; i <= deviceCount; i++) {
@@ -120,20 +123,23 @@
 				var array3;
 				var array4;
 				var array5;
-				console.log("设备号"+devWeek);
+				var i=0;
+				console.log(devWeek);
 				trendsElectricity.showLoading();
 				trendsVoltage.showLoading();
 				trendsCapacity.showLoading();
 				kWhArea.showLoading();
-				//获取实时一次全部数据
+				//获取实时一次一个数据
 				//jQuery.support.cors = true;
+				
+				setInterval(function show(){
 				$.ajax({
-					url: url + "data/realTimeData",
+					url: url + "data/lastestData",
 					type: 'post',
 					data: {
 						deviceId: devWeek
 					},
-					dataType: "json",
+//					dataType: "json",
 					xhrFields: {
 						withCredentials: true
 					},
@@ -144,19 +150,17 @@
 						trendsCapacity.hideLoading();
 						kWhArea.hideLoading();
 						console.log(data);
-						var storage=window.localStorage;
-						storage.setItem("oneAll",data.length);
+						
 						//console.log(typeof optionTime+" "+typeof data[i].data.electricity);
 						//把数据放到数组
-						array1 = new Array(data.length);
-						array2 = new Array(data.length);
-						array3 = new Array(data.length);
-						array4 = new Array(data.length);
-						array5 = new Array(data.length);
-						for(var i = 0; i < data.length; i++) {
-							
+						array1 = new Array();
+						array2 = new Array();
+						array3 = new Array();
+						array4 = new Array();
+						array5 = new Array();
+						
 							// 转换时间戳	
-							var d = new Date(data[i].time);
+							var d = new Date(data.time);
 							var year = d.getFullYear();
 							var month = d.getMonth() + 1;
 							var date = d.getDate();
@@ -164,29 +168,29 @@
 							var minute = d.getMinutes();
 							var second = d.getSeconds();
 							var optionTime = hour + ":" + minute + ":" + second;
-
+						
 							array1[i] = optionTime;
-							array2[i] = data[i].electricity;
-							array3[i] = data[i].voltage;
-							array4[i] = data[i].power;
-							array5[i] = data[i].totalPower;
-
-						}
+							array2[i] = data.electricity;
+							array3[i] = data.voltage;
+							array4[i] = data.power;
+							array5[i] = data.totalPower;
+							i++;
+							console.log("i="+i+"array1="+array1);
 						var electricityMin=Math.max.apply( Math, array2 )-0.05;
 						var electricityMax=electricityMin+0.07;
-						console.log("electricity"+Math.max.apply( Math, array2 ));
+						console.log(Math.max.apply( Math, array2 ));
 						
 						var voltageMin=Math.max.apply( Math, array3 )-3.5;
 						var voltageMax=voltageMin+4.5;
-						console.log("voltage"+Math.max.apply( Math, array3 ));
+						console.log(Math.max.apply( Math, array3 ));
 						
-						var powerMin=Math.max.apply( Math, array4 )-0.3;
+						var powerMin=Math.max.apply( Math, array4 )-0.2;
 						var powerMax=powerMin+0.4;
-						console.log("power"+Math.max.apply( Math, array4 ));
+						console.log(Math.max.apply( Math, array4 ));
 						
 						var totalPowerMin=Math.max.apply( Math, array5 )-1;
 						var totalPowerMax=totalPowerMin+1;
-						console.log("totalPower"+Math.max.apply( Math, array5 ));
+						console.log(Math.max.apply( Math, array5 ));
 						//实时电流
 						trendsElectricity.setOption({
 							xAxis: {
@@ -262,133 +266,8 @@
 						});
 
 						console.log(array1 + " " + array2 + " " + array3 + " " + array4 + " " + array5);
-						
-//						sleep(10000);
-//						alert("aa");
-			//更新最新数据
-				var indexReturn;
-//				indexReturn =window.setTimeout(function(){
-				setInterval(function show(){
-					console.log("更新");
-						$.ajax({
-					url: url + "data/lastestData",
-					type: 'post',
-					data: {
-						deviceId: devWeek
-					},
-					dataType: "json",
-					xhrFields: {
-						withCredentials: true
-					},
-					crossDomain: true,
-					success: function(data) {
-						console.log(data);
-						var storage=window.localStorage;
-						
-						var oneAll=storage.getItem("oneAll");
-						var d = new Date(data.time);
-							var year = d.getFullYear();
-							var month = d.getMonth() + 1;
-							var date = d.getDate();
-							var hour = d.getHours();
-							var minute = d.getMinutes();
-							var second = d.getSeconds();
-							var updateTime = hour + ":" + minute + ":" + second;
-						
-						
-						for(var i=0;i<oneAll;i++){
-							array1[i]=array1[i+1];
-							array2[i]=array2[i+1];
-							array3[i]=array3[i+1];
-							array4[i]=array4[i+1];
-							array5[i]=array5[i+1];
-						}
-						
-						array1[oneAll-1] = updateTime;
-						array2[oneAll-1] = data.electricity;
-						array3[oneAll-1] = data.voltage;
-						array4[oneAll-1] = data.power;
-						array5[oneAll-1] = data.totalPower;
-						//实时电流
-						trendsElectricity.setOption({
-							xAxis: {
-								data: array1
-							},
-							yAxis: {
-        						name:'电流(A)',
-								min: electricityMin,
-     							max:electricityMax	
-    						},
-							series: [{
-								name: '电流',
-								type: 'line',
-								data: array2
-							}]
 
-						});
-						//实时电压
-						trendsVoltage.setOption({
-							xAxis: {
-								type: 'category',
-								data: array1
-							},
-							yAxis: {
-        						name:'电压(V)',
-								min:voltageMin,
-     							max:voltageMax	
-    						},
-							series: [{
-								name: '电压',
-								type: 'line',
-								data: array3
-							}]
-
-						});
-						//实时功率
-						trendsCapacity.setOption({
-							xAxis: {
-								type: 'category',
-								data: array1
-							},
-							yAxis: {
-        						name:'电功率(kw)',
-								min:powerMin,
-     							max:powerMax	
-    						},
-							series: [{
-								name: '功率',
-								type: 'line',
-								data: array4
-							}]
-
-						});
-
-						//实时用电量
-						kWhArea.setOption({
-							xAxis: {
-								type: 'category',
-								data: array1
-							},
-							yAxis: {
-        						name:'用电量(kw.h)',
-								min:totalPowerMin,
-     							max:totalPowerMax	
-    						},
-							series: [{
-								name: '用电量',
-								type: 'line',
-								data: array5
-
-							}]
-
-						});
-						
-					},
-					error:function(){
-						
-					}
-					});
-					},720000);
+			
 						
 					},
 					error: function() {
@@ -396,6 +275,7 @@
 						alert('error');  
 					}
 				});
+				},6000);
 				
 				
 				

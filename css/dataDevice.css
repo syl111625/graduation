@@ -22,10 +22,10 @@
 				border-radius: 5px;
 			}
 			.devID{
-				right: 160px;
+				right: 145px;
 			}
 			.definedID{
-				right: 465px;
+				right: 450px;
 			}
 			.chooseDev {
 				right: 115px;
@@ -52,11 +52,10 @@
 				right: 50px;
 			}
 			
-			.help {
+			.help,.helpPrice{
 				right: 5px;
 				line-height: 28px;
 			}
-			
 			
 			.PriceEleSty{
 				color: red;
@@ -81,7 +80,7 @@
 			.thisMonthText{
 				color: red;
 				text-align: center;
-				margin: 30px 0 0 90px;
+				margin: 30px 0 0 60px;
 			}
 			.thisMonthRMB{
 				
@@ -95,6 +94,9 @@
 				width: 200px;
 				height: 200px;
 				margin: 20px 0 0 80px;
+			}
+			#start,#end{
+				width:140px;
 			}
 			
 			

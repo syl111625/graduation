@@ -38,7 +38,7 @@
 				height:610px;
 				margin: 20px 0px 5px -30px;
 				background: url(../../img/loginBGM.jpg) no-repeat;
-				background-size:100% 100% ;
+				background-size:100% 100%;
 				position: relative;
 				
 			}
@@ -47,8 +47,9 @@
 				height:340px;
 				background: rgba(240,255,255,1);
 				position: absolute;
-				top:12%;
+				top:20%;
 				right: 8%;
+				
 			}
 			
 			.login-new {

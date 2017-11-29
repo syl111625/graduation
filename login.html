@@ -9,10 +9,28 @@
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
 		<link rel="stylesheet" type="text/css" href="css/login-register/login.css"/>
 		
-		
+		<style type="text/css">
+			.content{
+				position: relative;
+			}
+			.loginText{
+				position: absolute;
+				left: 20%;
+				top: 40%;
+				color: #fff;
+				z-index: 20;
+			}
+			.pText{
+				font-size: 45px;
+				
+			}
+			.peText{
+				font-size: 35px;
+			}
+		</style>
 	</head>
 
-	<body>
+	<body onkeydown="enterkey()">
 		<div class="content">
 			<div class="row">
 			<!--<div class=" top ">
@@ -21,6 +39,10 @@
 				<span class="top-text">欢迎登录</span>
 			</div>-->
 			<!--用户登录-->
+			<div class="loginText">
+				<p class="pText">电能管理平台</p>
+				<p class="peText">物联网让校园生活更美好</p>
+			</div>
 			<div class=" main ">
 			
 				<div class=" main-form  clearfix">
@@ -67,17 +89,16 @@
 <script src="js/url.js" type="text/javascript"></script>
 <script type="text/javascript">
 //	表单提交并校验用户名和密码
-	$("#login-submit").click(function(){		
-	
-	console.log(url);
+
+	function adminSumbit(){
+		console.log("显示url"+url);
 	if($("#username").val()!="" && $("#password").val()!=""){
 		
 	jQuery.support.cors = true;  
 	
     $.ajax({
+    	url: url+"login/login",
         type: "POST",
-        url: url+"login/login",
-
 		data: $("#login-form").serialize(),
 //      cache: true,
 //      async : true,
@@ -88,13 +109,16 @@
 //      crossDomain: true,
         success: function (data)
         {
-        	console.log(data.data); 
-
-     		
+//      	console.log("登录成功数据:"+data.data); 
+			console.log(data.data);
+     		console.log("maintenanceMans"+data.data.maintenanceMans);
 			var storage = window.localStorage;
+//			获取维修人
+			storage.setItem("maintenanceMans",data.data.maintenanceMans);
+			
 //			获取警报信息
 			storage.setItem("messageCount",data.data.messageCount);
-			
+			storage.setItem("faultCount",data.data.faultCount);
 			storage.setItem("deviceCount",data.data.deviceCount);//设置deviceCount为"deviceCount"
 			
 			storage.setItem("faultDeviceCount",data.data.faultDeviceCount);
@@ -104,14 +128,15 @@
 			storage.setItem("id",data.data.user.id); 
 			storage.setItem("userName",data.data.user.name);
 			storage.setItem("password",data.data.user.password);
-			storage.setItem("email",data.data.user.email);					
+			storage.setItem("email",data.data.user.email);
+			storage.setItem("phone",data.data.user.phone);
         	storage.setItem("time",data.data.user.time);	
             if(data.code=="200"){
             	
                console.log("登录成功");
                window.location.href="index.html";
                return true;
-            }else if(data.code=="405"){
+            }else {
                 alert("账户或密码错误");
                 window.location.href="login.html";
                 return true;
@@ -125,6 +150,20 @@
             return false;
         }
      });}
+	}
+	$("#login-submit").click(function(){		
+		adminSumbit();
+	
     });
+ //实现enter按键登录   
+ function enterkey() 
+{ 
+e = event.keyCode; 
+if (e==13) 
+{ 
+adminSumbit();
+event.returnValue= false; // 取消此事件的默认操作 
+} 
+}
 </script>
 </html>

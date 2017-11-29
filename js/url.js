@@ -1,5 +1,5 @@
-var url= "http://10.50.2.177:8080/";
-var wsUrl="ws://10.50.2.177:8080/webSocketServer/";
+var url= "http://192.168.3.7:8080/";
+var wsUrl="ws://192.168.3.7:8080/webSocketServer/";
 // 本地
 //http://192.168.3.14:8080/   
 //阿里云

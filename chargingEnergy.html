@@ -24,7 +24,7 @@
 								<div class="btn-group" role="group">
 									<button type="button" class="btn btn-default posrig devID">电表ID</button>
 									<select name="deviceId" class="posrig chooseDev devMonth">
-										<option value="">全部</option>
+										<option value="">1</option>
 									</select>
 								</div>
 								
@@ -55,7 +55,7 @@
 							<h5>电费设置</h5>
 							<div class="ibox-tools">
 
-								<button class="btn btn-warning btn-xs posrig help helpPrice">帮助</button>
+								<button class="btn btn-warning btn-xs posrig helpPrice" >帮助</button>
 							</div>
 						</div>
 						<div class="ibox-content ">
@@ -139,10 +139,10 @@
 			//根据设备数量设置设备下拉框
 			var storage = window.localStorage;
 			var deviceCount = storage.getItem("deviceCount");
-			console.log(deviceCount);
+			console.log("deviceCount"+deviceCount);
 			//选择电表列表
 			var Kwhlist = "";
-			Kwhlist+="<option>" + "全部" + "</option>";
+//			Kwhlist+="<option>" + "全部" + "</option>";
 			for(var i = 1; i <= deviceCount; i++) {
 				Kwhlist += "<option value="+i+">" + i + "</option>";
 			}				
@@ -186,7 +186,7 @@
 								confirmButtonText: "确定",
 								closeOnConfirm: true,
 							});
-						$(".thisMonthText").html("* 修改单价后本月的电费为(元)");
+						$(".thisMonthText").html("* 修改单价后总设备本月的电费为(元)");
 						$(".devRMB").html(data.data[1]);
 					},
 					error: function() {
@@ -200,12 +200,12 @@
 			$(".checkWeek").click(function() {
 				//选中的电表值，日期值，周期值			
 				var devMonth = $('.devMonth option:selected').val();
-				if(devMonth == "全部"){
-					devMonth="";
-				}				
+//				if(devMonth == "全部"){
+//					devMonth="";
+//				}				
 				//电价	
 				var PriceEle = $(".PriceEle").val();				
-				console.log(devMonth+" "+PriceEle);
+				console.log("devMonth"+devMonth+"PriceEle"+PriceEle);
 				//图表更新数据				
 				jQuery.support.cors = true;
 				$.ajax({
@@ -223,7 +223,8 @@
 					success: function(data) {
 						
 						console.log(data);
-						//累计电费						
+						//累计电费	
+						$(".thisMonthText").html("*该设备本月的电费为(元)");
 						$(".devRMB").html(data);
 					},
 					error: function() {						
@@ -236,9 +237,9 @@
 			$(".checkDef").click(function() {
 				//选中的电表值，日期值，周期值	,电价		
 				var definedDev = $('.definedDev option:selected').val();
-				if(definedDev == "全部"){
-					definedDev="";
-				}				
+//				if(definedDev == "全部"){
+//					definedDev="";
+//				}				
 				var definedDevS = $(".definedDevS").val();
 				var definedDevE = $(".definedDevE").val();
 				var PriceEle = $(".PriceEle").val();
@@ -269,7 +270,7 @@
 
 						for(var i = 0; i < data.length; i++) {
 
-							array1[i] = data[i].variable2;
+							array1[i] = data[i].variable1;
 							array2[i] = data[i].variable3;
 
 						}

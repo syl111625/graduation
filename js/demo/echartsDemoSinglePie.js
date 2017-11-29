@@ -58,7 +58,7 @@ var echartsPieMonth = echarts.init(document.getElementById("echarts-pie-chartMon
         calculable : true,
         series : [
             {
-                name:'访问来源',
+                name:'用电量',
                 type:'pie',
                 radius : '55%',
                 center: ['50%', '60%'],               
